@@ -1,0 +1,2 @@
+Input nella forma
+nome dimensione padre  

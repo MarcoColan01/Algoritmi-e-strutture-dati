@@ -1,38 +1,37 @@
-// Alessandro Belfiore 975826
-1) Risposta corretta C
-a) Il disegno rappresenta archi che non sono orientati, questo non ci fa comprendere la "trasformazione dei
-prodotti in fasi successive".
-b) Un nodo (reparti) del grafo riceve i prodotti da due reparti distinti, il testo evidenzia che "Ogni
-reparto riceve i prodotti da un solo altro reparto".
-d) Oltre alle stesse motivazioni del punto a, il primo reparto (Primo Reparto) manda i propri prodotti a ben
-tre reparti distinti, quando il testo evidenzia che "Da ogni reparto ci sono un massimo di 2 reparti possibili
-cui mandare il prodotto".
-e) Un reparto riceve i prodotti da due reparti distinti.
 
-2)
-Possiamo rappresentare l'insieme di più impianti di produzione attraverso una foresta di alberi, ogni albero indica
-un impianto di produzione; i nodi di ciascun albero rappresentano i reparti, all'interno di ciascun nodo vengono
-salvate delle informazioni quali "num_lavoratori" che indica il numero di lavoratori all'interno di quel reparto
-e "n" che indica il numero progressivo di reparto. Gli archi rappresentano i passaggi del prodotto da un reparto
-all'altro e le foglie di tali alberi indicano il reparto di collaudo, dato che da tali nodi non usciranno archi.
-Il Primo Reparto può essere invece visto come la radice dell'albero, ovvero il punto di partenza della fase
-di produzione dell'intero prodotto.
+Un impianto di produzione produce diverse tipologie di prodotti. Il processo di produzione prevede la trasformazione dei prodotti in fasi successive, all’interno di reparti specializzati. I reparti sono individuati da un numero intero progressivo. Ogni reparto impiega un certo numero di lavoratori. Ci sono due tipi di reparto:
+    - Reparti di collaudo: sono dedicati al collaudo dei prodotti; conclusa la fase di collaudo, i prodotti escono dall’impianto perché il ciclo di produzione è concluso.
+    - Reparti di produzione: conclusa la fase di produzione in uno di questi reparti, il prodotto viene inviato ad un altro reparto (di produzione o collaudo). Da ogn reparto ci sono un massimo di 2 reparti possibili cui mandare il prodotto.
+Ogni reparto riceve i prodotti da un solo altro reparto. La prima fase di produzione avviene sempre nello stesso reparto di produzione, chiamato Primo Reparto.
+I processi produttivi dell’impianto sono descritti da uno schema che riporta, per ogni numero di reparto (di produzione o collaudo): il numero di lavoratori impiegati e il numero di reparto (di produzione) da cui provengono i prodotti.
+    
+    1. Si considerino i diagrammi in figura. Se ogni quadratino corrisponde a un reparto, quale dei diagrammi è adatto a descrivere lo schema produttivo? Si giustifichi la risposta e si spieghi perché tutti gli altri diagrammi sono da escludere.
+    Risposta 1.  Lo schema più adatto a descrivere lo schema produttivo è il c. Gli altri schemi hanno i seguenti problemi:
+    schema a) gli archi non sono orientati, quindi è inteso che un prodotto può tornare indietro (non fa ben comprendere il concetto di fasi successive)
+    schema b) vi è un reparto di produzione che può ricevere prodotti da due reparti diversi: questo viola la definizione 
+    schema d) dal primo reparto si possono raggiungere 3 reparti diversi: questo viola la definizione 
+    schema e) stesso problema di a)
 
-3)
-int lavoratoriInCollaudo(Bit_node root) {
-  if(root ==  NULL) {
-    return 0;
-  }
-  if(root -> left == NULL && root -> right == NULL) {
-    return root -> num_lavoratori;
-  }
-  return lavoratoriInCollaudo(root -> left) + lavoratoriInCollaudo(root -> right);
-}
+    2. Si modelli lo schema dei processi produttivi usando una struttura dati opportuna, chiarendo come sia collegata alla situazione descritta; in particolare
+        - si descriva, utilizzando una terminologia appropriata, come sono rappresentati i reparti, i passaggi da un reparto all’altro, il numero di lavoratori operativi nei vari reparti;
+        - si definisca, con la terminologia appropriata, che cosa sono i reparti di collaudo e il Primo Reparto.
+    Risposta 2) lo schema dei processi produttivi può essere modellato mediante una foresta di alberi, in cui ogni albero rappresenta un impianto di produzione. Inoltre, in ogni albero, i vari reparti (collaudo, produzione, primo) sono rappresentati dai nodi dell'albero, i quali mantengono le informazioni sul numero progressivo di reparto e il numero di dipendenti che lavorano all'interno di esso. In particolare: 
+        -Primo reparto = radice dell'albero, dato che rappresenta il reparto da cui parte la produzione nell'impianto
+        -Reparto di produzione = nodo interno dell'albero
+        -Reparto di collaudo = foglia dell'albero, dato che rappresenta un reparto in cui termina la produzione e quindi non si può arrivare in nessun altro reparto. 
+    3. Utilizzando opportunamente la struttura dati definita al punto precedente, si progetti un algoritmo che, avendo in input lo schema dei processi produttivi e il numero di lavoratori operativi in ciascun reparto, calcoli quanti sono i lavoratori operativi nei reparti di collaudo.
+    Rispota 3) è possibile progettare un algoritmo che visita tutta la foresta di alberi e, per ogni foresta, calcola il numero di dipendenti che lavorano nei reparti di produzione. 
+    func esame (root *Bit_node) int{
+        if root = nil {
+            return 0 
+        }
+        if root.dx == nil && root.sx == nil {
+            return root.num_lavoratori
+        }
+        return esame(root.dx) + esame(root.sx)
+    }
 
-void Algoritmo(int *a, int n) {
-  int sum = 0;
-  for(int i = 0; i < n; i++) {
-    sum = sum + lavoratoriInCollaudo(a[i]);
-  }
-  printf("I lavoratori dei reparti di collaudo dei diversi impianti di produzione sono :%d\n",sum);
-}
+    
+
+
+
