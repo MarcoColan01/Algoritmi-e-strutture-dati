@@ -1,0 +1,9 @@
+// Alessandro Belfiore 975826
+1) f(c) = 0;
+2) f(c) = 1;
+3) f(c) = 1 se matr[i][j] != 1, altrimenti f(c) = 0;
+4) f(c) = 1 se matr[i][j] != 1, altrimenti f(c) = 0;
+5) f(c) = dinamica[i+1][j] + dinamica[i][j+1];
+6) dinamica[0][0] -> casella in alto a sx;
+
+// Salto la progettazione --> vedere direttamente l'implementazione

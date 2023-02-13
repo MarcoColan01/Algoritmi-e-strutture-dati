@@ -1,0 +1,38 @@
+// Alessandro Belfiore 975826
+1) Risposta corretta C
+a) Il disegno rappresenta archi che non sono orientati, questo non ci fa comprendere la "trasformazione dei
+prodotti in fasi successive".
+b) Un nodo (reparti) del grafo riceve i prodotti da due reparti distinti, il testo evidenzia che "Ogni
+reparto riceve i prodotti da un solo altro reparto".
+d) Oltre alle stesse motivazioni del punto a, il primo reparto (Primo Reparto) manda i propri prodotti a ben
+tre reparti distinti, quando il testo evidenzia che "Da ogni reparto ci sono un massimo di 2 reparti possibili
+cui mandare il prodotto".
+e) Un reparto riceve i prodotti da due reparti distinti.
+
+2)
+Possiamo rappresentare l'insieme di più impianti di produzione attraverso una foresta di alberi, ogni albero indica
+un impianto di produzione; i nodi di ciascun albero rappresentano i reparti, all'interno di ciascun nodo vengono
+salvate delle informazioni quali "num_lavoratori" che indica il numero di lavoratori all'interno di quel reparto
+e "n" che indica il numero progressivo di reparto. Gli archi rappresentano i passaggi del prodotto da un reparto
+all'altro e le foglie di tali alberi indicano il reparto di collaudo, dato che da tali nodi non usciranno archi.
+Il Primo Reparto può essere invece visto come la radice dell'albero, ovvero il punto di partenza della fase
+di produzione dell'intero prodotto.
+
+3)
+int lavoratoriInCollaudo(Bit_node root) {
+  if(root ==  NULL) {
+    return 0;
+  }
+  if(root -> left == NULL && root -> right == NULL) {
+    return root -> num_lavoratori;
+  }
+  return lavoratoriInCollaudo(root -> left) + lavoratoriInCollaudo(root -> right);
+}
+
+void Algoritmo(int *a, int n) {
+  int sum = 0;
+  for(int i = 0; i < n; i++) {
+    sum = sum + lavoratoriInCollaudo(a[i]);
+  }
+  printf("I lavoratori dei reparti di collaudo dei diversi impianti di produzione sono :%d\n",sum);
+}

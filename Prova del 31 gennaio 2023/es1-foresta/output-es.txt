@@ -1,0 +1,15 @@
+lampada (val = 4)
+lavatrice
+tazza (val = 2)
+frigorifero
+cassetto (val = 5)
+tavolo
+valigia (val = 3)
+sedia
+posate (val = 4)
+letto
+microonde (val = 32)
+mensola
+libreria (val = 2)
+bambola
+scacchi (val = 5)

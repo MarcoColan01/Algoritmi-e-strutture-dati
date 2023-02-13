@@ -1,0 +1,73 @@
+// Alessandro Belfiore 975826
+1)
+i) Coda
+
+2)
+La struttura dati è implementata con un array circolare, contiene al suo interno un array di una data dimensione (len)
+contenente gli elementi della coda, viene tenuta traccia della testa e della coda tramite 2 variabili intere (lo/hi),
+grazie ad esse è possibile fare inserimenti e rimozioni in tempo costante O(1), inoltre in una variabile intera n, viene tenuta traccia
+del numero totale degli elementi presenti all'interno della struttura dati.
+
+3)
+int ds_size(ds *y) {
+  return y -> n;
+}
+
+4)
+void ds_print(ds *y) {
+  for(int i = 0; i < y -> n; i++) {
+    printf("%d ",y -> c[(i + y -> low) % y -> len]);
+  }
+  printf("\n");
+}
+
+5)
+a) Si
+b) No, quando ho un numero di elementi inferiore a len e la tail della coda si ritrova ad essere prima della head
+3 0 13 34 -1
+^   ^
+|   |
+hi  lo
+
+len = 5
+n = 4
+c) Si
+d) No, l'indice di coda è sempre inferiore alla dimensione della coda per definizione dato che quando diventa uguale a len
+viene impostato a 0.
+
+6)
+ds_insert(y,7);
+ds_insert(y,7);
+ds_insert(y,7);
+ds_remove(y);
+ds_insert(y,1);
+ds_remove(y);
+ds_remove(y);
+ds_insert(y,3);
+ds_insert(y,8);
+ds_insert(y,4);
+
+7)
+  c      lo     hi    len    n
+         0     0       1     0
+  1      0     1       2     1        REBUILD!!!
+         1     1       2     0
+  2      1     0       2     1
+         0     0       2     0
+  3      0     1       2     1
+
+8)
+a) possibile
+b) non possibile
+c) possibile
+d) non possibile
+e) non possibile
+
+9)
+Vero, dato che quando n == len lo spazio viene raddoppiato.
+
+10)
+b) 1
+
+11)
+b) 1
