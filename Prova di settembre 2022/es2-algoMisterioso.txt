@@ -1,0 +1,17 @@
+Considerate un grafo orientato e pesato G. La funzione algo riceve in input la matrice d'adiacenza di G, il numero n di nodi dei suoi nodi e gli indici h ed s di due nodi di G. 
+Rispondere alle seguenti domande
+
+1. riassumere a parole cosa fa la funzione algo 
+
+
+2. date dei nomi più significativi alle variabili c,n,m_i,v
+
+
+3. spiegare in quali situazioni la funzione termina con l'esecuzione di riga  e mostrarne almeno un esempio 
+
+
+4. spiegare in quali situazioni la funzione termina con l'esecuzione di riga   e mostrarne almeno un esempio 
+
+
+
+

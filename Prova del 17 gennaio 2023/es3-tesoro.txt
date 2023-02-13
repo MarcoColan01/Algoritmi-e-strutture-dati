@@ -1,0 +1,116 @@
+Compiti:
+    a) dato il nome di un oggetto, calcolare il numero misterioso associato all'oggetto 
+    b) dato il nome di un oggetto, scrivere l'espressione completamente parentesizzata che riassume le operazioni da fare per calcolare il numero misterioso associato all'oggetto
+    c) stampare, in ordine crescente, tutti i numeri scritti sui biglietti 
+    d) dato il nome di un oggetto a, stampare i nomi degli oggetti a cui serve a 
+
+Punto 1) modellate la situazione con una st. dati opportuna, che permette di svolgere efficientemente i compiti descritti sopra:
+    descrivete come si possono rappresentare i foglietti e il loro contenuto 
+    riformulate, in termini della st. scelta, ciascuno dei compiti enunciati sopra 
+
+La situazione può essere modellata e rappresentata mediante un albero binario. Questo albero binario avrà le seguenti caratteristiche:
+    - radice = rappresenta il foglietto indicante un oggetto il cui valore va calcolato per vincere il gioco 
+    - nodo generico (non radice o foglia) = foglietto contenente il nome di un oggetto e un'espressione numerica del tipo a OP b, dove a è il figlio sx del nodo, b è il figlio dx e OP è l'operazione matematica che va fatta sui valori dei due nodi figli. A loro volta, il valore di uno (o entrambi) i figli potrebbe essere sconosciuto: in questo caso si avrà un nodo che rappresenta un foglietto e avrà la stessa struttura del nodo padre, col nome dell'oggetto che rappresenta e l'operazione matematica da fare sui due figli dx e sx (definizione ricorsiva, in un certo senso)
+    - nodo foglia = rappresenta un foglietto contenente il nome di un oggetto il cui valore è già noto e non va calcolato. Avrà quindi un valore noto e non un'operazione matematica da eseguire sui figli dx e sx 
+    - senso del collegamento padre-figlio = un nodo è padre di un nodo figlio, se quest'ultimo contribuisce al calcolo del valore del nodo padre col valore di un altro nodo figlio
+
+Riformulando i compiti descritti sopra in termini di albero binario:
+    compito a) visita in post-ordine dell'albero 
+    compito b) visita in ordine dell'albero 
+    compito c) eseguire il compito a) per ogni nodo dell'albero in modo che ogni nodo abbia un valore noto. Poi si riempie un array che conterrà valori struct {oggetto, valore} indicanti gli oggetti e i relativi valori; questo array va poi ordinato in base ai valori. 
+    compito d) risalire dal figlio verso la radice e stampando i nomi dei nodi che si attraversano nel frattempo. Per questo ho messo un puntatore father nella struct dei nodi 
+
+Punto 2) come va implementata la st. dati scelta 
+La struttura dati, come già detto, sarà un albero binario. La struttura dei nodi (che siano generici, radice o foglia), sarà la seguente:
+        type treeNode struct{
+            oggetto string 
+            val int     //può essere noto in partenza (nodo foglia) oppure no 
+            op string   //indica l'operazione da fare sui figli sx e dx. NB: le foglie hanno op = ""
+            father *treeNode    //nodo padre
+            dx *treeNode        //figlio destro del nodo
+            sx *treeNode        //figlio sinistro del nodo
+        }
+
+Punto 3) Per ciascun compito, progettate un algoritmo che permetta di svolgere i compiti, sfruttando la st. dati scelta. Usare pseudocodice o parole e, se serve, riferirsi ad algoritmi noti 
+
+compito a) Questo compito può essere risolto mediante una visita in post-ordine dell'albero, che, a partire dalla radice dell'albero, visita prima il sottoalbero sx, poi il sottoalbero dx e infine la radice. In questo modo, quando si visiterà la radice dell'albero, i suoi figli sx e dx avranno un valore già noto grazie alla visita eseguita, e quindi se ne può determinare il valore. Pseudocodice:
+funzione compito_a(radice albero t){        //la radice è un nodo
+    if t == null{
+        return
+    }
+    compito_a(t.sx)
+    compito_a(t.dx)
+    if t.val non è noto{
+        if t.sx.val è noto AND t.dx.val è noto{
+            t.val = t.sx t.op t.dx      //faccio a OP b
+        }
+    }
+}
+Alla fine dell'algoritmo, la radice dell'albero avrà val noto, che sarà il valore che fa vincere il gioco 
+
+compito b) Questo compito può essere risolto mediante una visita in ordine dell'albero, che a partire dalla radice dell'albero visita prima il sottoalbero sx, poi la radice e infine il sottoalbero sx. In questo caso, quando si visita un nodo, se questo ha valore noto se ne stampa il valore, altrimenti l'operazione aritmetica da eseguire sui figli dx e sx. Pseudocodice:
+funzione compito_2(radice albero t){
+    if t == null{
+        return
+    }
+    compito_2(t.sx)
+    if t.val è noto{
+        stampa il valore del nodo 
+    }else{
+        stampa l'operazione matematica 
+    }
+    compito_2(t.dx)
+
+}
+
+compito c) questo compito può essere risolto in due passi:
+                passo 1: eseguire prima il compito 1), in modo tale che, alla fine, ogni nodo dell'albero abbia un valore noto. Mentre eseguo il compito 1, se un nodo dell'albero ha valore noto lo aggiungo all'array di foglietti, altrimenti procedo con la ricerca
+                passo 2: visitare l'albero (non importa con quale strategia, io per esempio scelgo la visita in ordine) e riempire un array di struct del tipo {oggetto, valore}
+                passo 3: ordinare l'array con chiave di ordinamento = valore mediante un algoritmo di ordinamento. Per ottenere le migliori prestazioni si potrebbe usare, ad esempio, heapsort, che richiede tempo nlog(n) con n = chiavi da ordinare e spazio O(1). Alla fine del passo 3, l'array risulta ordinato 
+Pseudocodice: 
+type foglietto struct{
+    oggetto string 
+    val int 
+}
+
+funzione compito1_mod(radice albero t) []foglietto{
+    if t == null{
+        return foglietti
+    }
+    compito1_mod(t.sx)
+    compito1_mod(t.dx)
+    if t.val non è noto{
+        if t.sx.val è noto AND t.dx.val è noto{
+            t.val = t.sx t.op t.dx      //faccio a OP b
+            sia k una variabile di tipo foglietto 
+            k.oggetto = t.oggetto 
+            k.val = t.val 
+            foglietti = append(foglietti, k)
+        }
+    }
+    return foglietti
+}
+
+funzione compito_3(radice albero t) []foglietto{
+    sia foglietti una slice di struct foglietto 
+    foglietti = compito1_mod(t)
+    ordina foglietti mediante l'algoritmo di ordinamento heapsort usando come chiave di ordinamento il campo val
+    stampa foglietti (che sarà ordinato)
+}
+
+compito 4) questo compito può essere implementato risalendo dal nodo in questione fino alla radice dell'albero seguendo i puntatori father presenti su ogni nodo. Durante il percorso si stampano i nodi che si incontrano 
+funzione compito_4(riferimento al nodo k){
+    do{
+        k = k.father 
+        stampa il nodo k 
+    }while(k.father != null)    //finchè non si arriva alla radice, questo perchè sarà l'unico nodo a non avere un padre 
+}
+
+4) discutete la complessità della vostra soluzione
+compito_1 : esegue una visita in post-ordine dell'albero (tempo O(n) per la visita) e in più usa spazio aggiuntivo sullo stack per la ricorsione 
+
+compito_2 : esegue una visita in ordine dell'albero (tempo O(n) per la visita) e in più usa spazio aggiuntivo sullo stack per la ricorsione 
+
+compito_3 : per prima cosa esegue una visita in ordine dell'albero (tempo O(n) per la visita), poi applica l'algortmo di ordinamento heapsort per ordinare i foglietti (tempo O(nlog(n)))
+
+
