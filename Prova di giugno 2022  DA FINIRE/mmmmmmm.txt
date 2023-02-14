@@ -1,0 +1,17 @@
+I 584 E
+log 8033020 D
+ext 5626152 D
+J 4060174 D
+K 7214296 D
+F 29116 A
+H 62596 A
+G 2557 A
+
+
+E 0 A I
+
+D 0 / J K log ext
+/ 0 nil A C D B
+A 0 / F H G E
+B 14848514 /
+C 8504156 /

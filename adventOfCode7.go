@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"os"
+	"strings"
 )
 
 type elems struct {
@@ -13,18 +14,31 @@ type elems struct {
 }
 
 type filesystem struct {
-	vet []elems
+	system map[string]elems
 }
 
 func main() {
 	var fs filesystem
-	fs.vet = make([]elems, 0)
+	var app elems
+	fs.system = make(map[string]elems)
 	filename := os.Args[1]
 	file, _ := os.Open(filename)
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	defer file.Close()
 	for scanner.Scan() {
-		k := scanner.Text()
+		f := ""
+		k := strings.Split(scanner.Text(), " ")
+		if k[0] == "$" {
+			if k[2] != ".." {
+				f = k[2]
+				app.str = f
+				if f == "/" {
+					app.padre = nil
+				} else {
+
+				}
+			}
+		}
 	}
 }
