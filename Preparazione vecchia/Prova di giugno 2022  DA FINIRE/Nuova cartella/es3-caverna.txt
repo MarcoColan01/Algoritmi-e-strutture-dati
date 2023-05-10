@@ -1,0 +1,18 @@
+Considerate i seguenti cinque approcci:
+    1. Modellare la situazione con grafi
+    2. Modellare la situazione con alberi
+    3. Usare un approccio ricorsivo
+    4. Usare la tecnica della programmazione dinamica
+    5. Usare una tecnica greedy.
+Per ciascuno dei due problemi P1 e P2, valutate quali degli approcci suggeriti possono essere utili a risolvere il problema, giustificando la risposta. In particolare seguite i seguenti schemi.
+    • Se scegliete gli approcci 1 o 2:
+        a) descrivete come si può rappresentare la situazione usando grafi/alberi;
+        b) riformulate il problema usando la terminologia relativa a grafi/alberi;
+        c) indicate eventuali proprietà notevoli di questi grafi/alberi;
+        d) descrivete come è opportuno implementare la struttura dati scelta;
+        e) progettate un algoritmo per risolvere il problema, che faccia uso di grafi/alberi.
+    • Se scegliete l’approccio 3:
+        a) descrivete la relazione di ricorrenza individuata;
+        b) progettate un algoritmo ricorsivo che risolve il problema.
+    • Se scegliete l’approccio 4 o 5: progettare e descrivere un algoritmo che risolve il problema usando la programmazione dinamica / una tecnica greedy discutendone la correttezza.
+Se avete trovato soluzioni diverse per uno stesso problema, confrontate le soluzioni e valutate quale considerate migliore e perché.

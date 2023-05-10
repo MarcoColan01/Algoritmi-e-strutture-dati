@@ -1,0 +1,29 @@
+1. Scrivete una definizione per il tipo Bit_node che sia compatibile con quanto scritto nella funzione.
+
+type Bit_node struct {
+	item, y int
+	l, r    *Bit_node
+}
+
+
+2. Analizzate gli effetti della funzione f se viene invocata con secondo argomento 0, e rispondete alle domande seguenti:
+    a) Qual è l’effetto della funzione f se viene invocata sulla radice dell’albero disegnato sotto?
+    La funzione f esegue una visita in preordine dell'albero a partire dalla sua radice (ordine visita: radice - sottoalbero sx - sottoalbero dx) e, ogni volta che visita un nodo, assegna al suo valore y la somma tra il valore del nodo, il valore x e i nodi sopra di esso 
+    
+    b) Di quanto si alza al massimo lo stack per effetto questa chiamata?
+    Lo stack ha altezza O(h), dove h è l'altezza dell'albero 
+    
+    c) Quante altre chiamate della funzione f vengono effettuate per effetto di questa chiamata?
+    Viene fatta una chiamata per ogni figlio di un nodo
+    
+    d) Descrivete a parole cosa fa la funzione f se viene invocata sulla radice di un albero binario qualunque.
+    La funzione f, chiamata sulla radice di un generico albero binario, esegue una visita in preordine dell'albero e assegna, al parametro y di ogni nodo, la somma tra tutti i nodi al di sopra di esso e il valore item del nodo stesso (dunque, la radice ha y = item + x)
+    
+    e) Date un nome più significativo a y.
+    y = somma nodi superiori + "offset"
+    
+    f) In generale, di quanto si alza al massimo lo stack se la funzione viene invocata sulla radice di un albero binario qualunque?
+    Lo stack ha altezza proporzionale all'altezza dell'albero
+    
+    g) In generale, quante chiamate della funzione f vengono effettuate quando f viene invocata sulla radice di un albero binario qualunque?
+    1 prima chiamata + 1 una chiamata per ogni figlio di un nodo 

@@ -1,0 +1,17 @@
+Completate /rispondete le seguenti frasi:
+1. Se c è una casella nera, allora f(c) = 0
+
+
+2. Se c è la casella in basso a dx ed è bianca, allora f(c) = 
+
+
+3. Se c è una qualsiasi casella dell'ultima riga, si può scrivere una relazione di ricorrenza che fa riferimento alla casella a destra di c: f(c) = 
+
+
+4. Se invece c è una qualsiasi casella dell'ultima colonna, f(c) = 
+
+
+5. Se c è una casella bianca non di bordo, si può scrivere una relazione di ricorrenza che fa riferimento alla casella sotto e alla casella a destra di c: f(c)  =
+
+
+6. Per quale casella c si ha che f(c) coincide col numero di cammini completi ? 
