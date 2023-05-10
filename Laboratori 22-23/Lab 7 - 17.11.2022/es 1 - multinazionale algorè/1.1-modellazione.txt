@@ -1,0 +1,45 @@
+Nella multinazionale Algoré il lavoro è organizzato in maniera gerarchica. Ogni dipendente è
+inquadrato in un certo livello di impiego. Tranne i dipendenti di massimo livello, ogni dipendente
+ha un supervisore, di cui è detto subordinato. Un dipendente può avere 0, 1, o più subordinati.
+Si considerino i seguenti compiti.
+    (a) Dato un certo dipendente, stampare l’elenco dei suoi subordinati.
+    (b) Contare quanti sono i dipendenti che non hanno alcun subordinato.
+    (c) Dato un certo dipendente, individuare chi è il suo supervisore.
+    (d) Dato un certo dipendente, stampare la lista dei dipendenti che si trovano sopra di lui gerarchicamente, partendo dal suo supervisore e risalendo la gerarchia fino a un dipendente di
+    massimo livello.
+    (e) Stampare l’elenco di tutti i dipendenti –non importa l’ordine–, indicando per ciascuno chi è
+    il suo supervisore (tranne nel caso di dipendenti di massimo livello).
+Esempio: Anna è supervisore di Bruno, Carlo e Daniela. Bruno è supervisore di Enrico e
+Francesco. Gianni è supervisore di Harry. Francesco è supervisore di Irene. Il numero di
+dipendenti senza subordinati è 5 (Carlo, Daniela, Enrico, Harry, Irene). La lista di dipendenti
+che si trovano sopra Irene è: Francesco, Bruno, Anna. Questo è l’elenco dei dipendenti in ordine
+di livello: A, G (massimo livello), B, D, H, C (subordinati di dipendenti di massimo livello, non
+importa il loro ordine), F, E, I.
+
+
+1.1 Modellazione e progettazione
+1. Modellate la situazione con una struttura dati opportuna:
+• descrivete come si possono rappresentare i dipendenti e le loro relazioni con la
+struttura dati scelta;
+• riformulate, nei termini della struttura dati scelta, ciascuno dei compiti enunciati
+sopra.
+2. Descrivete come è opportuno implementare la struttura dati scelta.
+3. Per ciascun compito, progettate e descrivete un algoritmo che consente di svolgere il
+compito, sfruttando le scelte di progettazione e implementazione fatte precedentemente.
+Gli algoritmi possono essere descritti a parole o in pseudocodice; può essere opportuno
+fare riferimento ad algoritmi noti.
+
+Domanda 1: la situazione può essere modellata mediante albero con radice, ossia un albero in cui i nodi (tranne la radice) puntano verso l'alto. Tale struttura dati può essere implementata mediante un vettore di padri. Dunque, i compiti richiesti nel senso della struttura dati scelta possono essere intesi come:
+    compito a: percorso da un nodo al (primo) padre, per ogni figlio del padre
+    compito b: contare quante sono le foglie
+    compito c: per un dato nodo, individuare il (primo) padre
+    compito d: risalire da un nodo fino alla radice dell'albero
+    compito e: stampare il vettore di padri tranne la radice
+
+Domanda 2: il vettore di padri può essere realizzato con una mappa con chiavi e valori string, in cui la chiave rappresenta un dipendente, e il valore il suo supervisore; il dipendente di massimo livello avrà come valore associato la stringa vuota.
+
+Domanda 3: Compiti come algoritmi in pseudocodice 
+    compito a 
+    algoritmo stampaSubordinati(vetPadri map[string]string, dip string){
+        
+    }

@@ -1,0 +1,21 @@
+La sfida di Advent of Code, 2019, day 6, intitolata Universal Orbit Map, può essere affrontata
+modellando la situazione con un albero, e implementando l’albero con una tabella dei padri. La
+prima parte della sfida è riassunta qui sotto.
+Per entrambe le parti della sfida, prima di iniziare a scrivere codice, rispondete a queste
+domande:
+	1. Modellate la situazione con un albero: cosa rappresentano i nodi dell’albero? cosa rappresenta la relazione padre/figlio?
+	2. Riformulate i problemi usando la terminologia degli alberi:
+		a) Parte 1 - Cosa sono le orbite dirette? E le orbite indirette? Come può essere descritto, in termini di alberi, il numero di orbite indirette di un oggetto?
+		b) Parte 2 - Come può essere descritta, in termini di alberi, La distanza tra gli oggetti attorno a cui orbitano YOU e SAN?
+	3. Progettate una soluzione per calcolare:
+		a) Parte 1 - il numero di orbite indirette
+		b) Parte 2 - il numero di trasferimenti di orbita necessari
+	Ragionare in termini di alberi vi aiuterà a impostare gli algoritmi risolutivi!
+*/
+
+/*
+Risposta 1: la situazione può essere modellata con un albero, rappresentato come vettore di padri. Nello specifico, i nodi rappresentano gli oggetti dell'universo, mentre la relazine padre-figlio (quindi un cammino dal figlio al padre) indica che il figlio ruota attorno al padre, ossia che B ruota attorno ad A. 
+
+Risposta 2: 
+	a) un'orbita diretta è un cammino che, da un qualunque nodo, arriva al padre. Un'obita indiretta è un cammino che, da un qualunque nodo tranne il primo figlio della radice, risale verso tutti i nodi di altezza superiore a quella del primo padre sullo stesso sottoalbero. 
+

@@ -1,0 +1,5 @@
+esercizio 1.1: sistemare il fatto di leggere una riga da stdIn oppure da args, per ora legge solo con una stringa dichiarata
+
+esercizio 1.2: stessa cosa di 1 
+
+esercizio 2: aggiungere il fatto che ti dice dove si trova l'errore se c'è un tag chiuso ma non il corrispondente tag aperto e se non è stato chiuso un tag aperto (questo ultimo lo fa già)

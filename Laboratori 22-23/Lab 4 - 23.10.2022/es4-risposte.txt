@@ -1,0 +1,30 @@
+Avete l’implementazione di una lista, ma non sapete se si tratta di una lista semplice (con solo il
+riferimento all’inizio della lista) oppure una lista bidirezionale (con riferimenti all’inizio e alla fine della lista, e in cui ogni nodo ha riferimenti al nodo successivo e al precedente). Avete accesso alla lista solo tramite questa interfaccia:
+    • size() restituisce il numero di elementi nella lista
+    • contains(e) restituisce 1 se e è nella lista
+    • removeAtStart() cancella l’elemento all’inizio della lista
+    • removeAtEnd() cancella l’elemento alla fine della lista
+    • addAtStart(e) inserisce l’elemento e all’inizio della lista
+    • addAtEnd(e) inserisce l’elemento e alla fine della lista
+Indicate quali dei seguenti esperimenti consente di stabilire quale sia l’implementazione sconosciuta. Se ci sono più opzioni valide, scegliete la migliore. Giustificate la risposta.
+
+A) Realizzo una mia implementazione della lista semplice e confronto i tempi di esecuzione su tutte le funzioni. Se i tempi della mia implementazione coincidono con quelli della implementazione data per tutte le funzioni, allora si tratta di una lista semplice, altrimenti di una lista bidirezionale.
+Riposta: è un esperimento attendibile, ma potrebbe non esserlo se alcune operazioni vengono implementate in modo tale da impiegare un tempo diverso rispetto a quello della lista semplice dell'impleemntazione
+
+
+B) Eseguo N operazioni addAtEnd seguite da N operazioni addAtStart. Se le operazioni addAtEnd ci impiegano molto di più di quelle addAtStart, allora si tratta di una lista semplice, altrimenti una lista bidirezionale.
+Risposta: è un esperimento valido, dato che nel caso di lista semplice, addAdStart richiede tempo O(1) per creare il nodo e cambiare dei puntatori, mentre la addAtEnd richiede tempo O(n) per creare il nodo, scorrere tutta la lista e aggiungere l'elemento cambiando dei puntatori. La lista bidirezionale invece ci mette tempo O(1) per entrambe le operazioni. 
+
+
+C) Eseguo N operazioni addAtEnd seguite da N operazioni removeAtEnd. Se le operazioni removeAtEnd ci impiegano molto di più di quelle addAtEnd, allora si tratta di una lista semplice, altrimenti di una lista bidirezionale.
+Risposta: non è un esperimento attendibile, dato che in caso di lista semplice, i tempi della addAtEnd e removeAtEnd sono sempre O(n)
+
+
+D) Creo due istanze della lista e confronto il tempo di esecuzione della prima rispetto alla seconda, per tutte le operazioni. Se i tempi sono simili per tutte le operazioni, allora si tratta di una lista semplice, altrimenti di una lista bidirezionale.
+Risposta: non è un esperimento attendibile, dato che size e contains richiedono, nel caso peggiore, un tempo O(n) (anche se contains richiede tempo O(1) se l'elemento da cercare è in fondo o in testa alla lista)
+
+
+E) Nessuno degli esperimenti precedenti mi consente di rispondere alla domanda. Bisogna esaminare il codice per vedere se l’implementazione usa un riferimento prev al nodo precedente.
+Risposta: si ottiene la risposta, ma per quanto detto prima gli esperimenti A e B permettono di dare una risposta sul tipo di implementazione data 
+
+L'esperimento miglire è il B 

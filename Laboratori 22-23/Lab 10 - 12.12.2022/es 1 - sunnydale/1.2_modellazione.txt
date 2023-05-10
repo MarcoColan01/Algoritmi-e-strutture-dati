@@ -1,0 +1,10 @@
+Il problema può essere modellato tramite un grafo. Nello specifico:
+    - i nodi rappresentano gli svincoli
+    - gli archi rappresentano una galleria che collega due svincoli 
+    - ad ogni arco è associato un peso che è luminosità della galleria rappresentata da tale arco.
+
+Tale grafo è non orientato, pesato sugli archi e connesso. 
+Formulando il problema in termini di grafo, si tratta della determinazione, se esiste, del cammino minimo tra due nodi, dato che ad ogni passo si sceglie l'arco di peso minore (strategia greedy). 
+
+implementazione
+questo è classificato tra i problemi difficili in quanto non esiste un algorimo diretto che permette di determinare il cammino minimo tra due vertici, ma si può usare uno degli algoritmi noti per i cammini minimi: usiamo dijkstra
