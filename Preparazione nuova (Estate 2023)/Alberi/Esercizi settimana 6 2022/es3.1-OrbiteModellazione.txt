@@ -1,0 +1,19 @@
+1. Modellate la situazione con un albero: cosa rappresentano i nodi dell’albero? cosa rappresenta la relazione padre/figlio?
+La situazione può essere modellata mediante un albero generico (o con radice), in cui:
+    -nodi dell'albero: oggetti dello spazio
+    -radice dell'albero: centro di massa 
+    -relazione padre-figlio: siano x,y due nodi per la quale esiste la relazione padre-figlio (esiste un arco tra x e y): allora y ruota attorno a x. 
+
+
+2. Riformulate i problemi usando la terminologia degli alberi:
+    a) Parte 1 - Cosa sono le orbite dirette? E le orbite indirette? Come può essere descritto, in termini di alberi, il numero di orbite indirette di un oggetto?
+    In termini di albero con radice:
+        -orbite dirette: esiste un arco diretto tra il padre x e il figlio y 
+        -orbite indirette: cammino nodo-radice 
+
+    b) Parte 2 - Come può essere descritta, in termini di alberi, La distanza tra gli oggetti attorno a cui orbitano YOU e SAN?
+
+
+3. Progettate una soluzione per calcolare:
+    a) Parte 1 - il numero di orbite indirette
+    b) Parte 2 - il numero di trasferimenti di orbita necessari

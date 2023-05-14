@@ -1,0 +1,29 @@
+Conteggio dei nodi: Scrivi una funzione che accetti un albero binario e restituisca il numero totale di nodi presenti nell'albero.
+
+Ricerca di un valore: Scrivi una funzione che accetti un albero binario e un valore target, e restituisca true se il valore è presente nell'albero, altrimenti restituisca false.
+
+Visita in ordine: Scrivi una funzione che accetti un albero binario e stampi i valori dei nodi nell'ordine corretto della visita in ordine (sinistra, radice, destra).
+
+Visita in ampiezza: Scrivi una funzione che accetti un albero binario e stampi i valori dei nodi nell'ordine corretto della visita in ampiezza (livello per livello).
+
+Verifica se è un albero binario di ricerca: Scrivi una funzione che accetti un albero binario e verifichi se è un albero binario di ricerca valido, cioè se per ogni nodo, il valore di tutti i nodi nel suo sottoalbero sinistro è minore del suo valore e il valore di tutti i nodi nel suo sottoalbero destro è maggiore del suo valore.
+
+Altezza dell'albero: Scrivi una funzione che accetti un albero binario e restituisca l'altezza dell'albero, cioè il numero massimo di livelli dell'albero.
+
+Specchio dell'albero: Scrivi una funzione che accetti un albero binario e restituisca un nuovo albero che rappresenti lo specchio dell'albero di input, cioè un albero ottenuto scambiando i sottoalberi sinistro e destro di ogni nodo.
+
+Somma dei valori dei nodi: Scrivi una funzione che accetti un albero binario e restituisca la somma di tutti i valori dei nodi presenti nell'albero.
+
+
+NIL)COM
+COM)B
+B)C
+C)D
+D)E
+E)F
+B)G
+G)H
+D)I
+E)J
+J)K
+K)L
