@@ -1,0 +1,8 @@
+Anna:
+Bruno:Anna 
+Carlo:Anna
+Daniela:Anna
+Enrico:Bruno
+Franceso:Bruno
+Harry:Gianni
+Irene:Francesco

@@ -1,0 +1,41 @@
+1. Modellate la situazione con una struttura dati opportuna:
+• descrivete come si possono rappresentare i dipendenti e le loro relazioni con la struttura dati scelta;
+• riformulate, nei termini della struttura dati scelta, ciascuno dei compiti enunciati sopra.
+
+a. La situazione può essere modellata mediante un albero generico (o con radice): sappiamo che si tratta di un albero con radice perchè la traccia dice che "un dipendente può avere più subordinati", per cui un albero binario non sarebbe sufficiente a modellare la situazione. In termini di albero con radice, abbiamo che:
+	-nodi: rappresentano i dipendenti 
+	-arco padre-figlio: siano x,y due nodi in cui x è il padre e y è il figlio: se esite arco (x,y), allora x è subordinato di y. 
+	-radice albero: dipendente di livello massimo 
+	-livelli albero: livelli di impiego 
+
+b. In termini di albero con radice, possiamo riformulare ognuno dei compiti richiesti nel seguente modo: 
+	-Dato un certo dipendente, stampare l’elenco dei suoi subordinati -> dato un generico nodo dell albero, stampare ognuno dei suoi figli. Ovviamente, se il nodo è una foglia, non bisogna stampare nulla in quanto rappresenta i dipendenti di livello minimo. 
+	-Contare quanti sono i dipendenti che non hanno alcun subordinato -> contare il numero di foglie. Dato che i dipendenti che non hanno subordinati sono al livello minimo della gerarchia, questi sono posti nell ultimo livello dell albero e quindi sono nodi foglia.
+	-Dato un certo dipendente, individuare chi è il suo supervisore -> risalire dal figlio al padre 
+	-Dato un certo dipendente, stampare la lista dei dipendenti che si trovano sopra di lui gerarchicamente, partendo dal suo supervisore e risalendo la gerarchia fino a un dipendente di
+	massimo livello -> percorso nodo - radice.
+	-Stampare l’elenco di tutti i dipendenti –non importa l’ordine–, indicando per ciascuno chi è
+	il suo supervisore (tranne nel caso di dipendenti di massimo livello) -> visita generica dell albero.
+
+2. Descrivete come è opportuno implementare la struttura dati scelta.
+
+Dato che la struttura dati scelta è un albero con radice, si decide di implementarlo mediante un vettore di figli: in questo modo, molte dei compiti richiesti saranno implementabili semplicemente 
+
+3. Per ciascun compito, progettate e descrivete un algoritmo che consente di svolgere il compito, sfruttando le scelte di progettazione e implementazione fatte precedentemente. Gli algoritmi possono essere descritti a parole o in pseudocodice; può essere opportuno fare riferimento ad algoritmi noti.
+
+tipo vetPadri struct{
+	figlio, padre string
+}
+
+-funzione stampaSubordinati(gerarchia vetPadri, nome string){
+	for i = 0; i < len(gerarchia); i++{
+		if vetPadri[i].padre == nome{
+			stampa vetPadri[i].figlio
+		}
+	}
+}
+tempo O(n) con n = lunghezza vettore di padri 
+
+-funzione quantiSenzaSubordinati(gerarchia vetPadri) int{
+
+}
