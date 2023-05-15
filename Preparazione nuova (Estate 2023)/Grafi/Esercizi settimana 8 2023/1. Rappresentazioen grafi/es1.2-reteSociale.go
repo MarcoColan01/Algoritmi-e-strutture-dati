@@ -52,8 +52,7 @@ func readGraph(g *grafo, filename string) {
 	defer file.Close()
 	for scanner.Scan() {
 		k := strings.Split(scanner.Text(), " ")
-		fmt.Println(k[1])
-		if len(k) > 2 {
+		if len(k) != 2 {
 			n, _ := strconv.Atoi(k[1])
 			addUser(g, k[0], n, k[2:])
 		} else {
@@ -72,14 +71,6 @@ func printGraph(g *grafo) {
 	for i, k := range g.vertici {
 		fmt.Printf("Utente %s:\nEtà %d\nHobby:%v\n\n", i, k.età, g.hobby[k])
 	}
-
-	/*for i,k := range g.adiacenti{
-		fmt.Printf("Utente %s segue: ", i.key)
-		for j :=0; j < len(k); j++{
-			fmt.Printf("%s ", k[j].key)
-		}
-		fmt.Println()
-	} */
 
 }
 
