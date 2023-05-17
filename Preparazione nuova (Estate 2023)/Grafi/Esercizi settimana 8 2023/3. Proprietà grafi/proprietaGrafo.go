@@ -46,6 +46,10 @@ func addEdge(g *grafo, x int, y int) {
 	g.adiacenze[x] = append(g.adiacenze[x], y)
 }
 
+/*
+gen (p) genera un grafo casuale, a partire dalla probabilità p compresa tra 0 e 1 (inclusi). Il modello matematico di riferimento è il seguente: si considerano tutti i possibili archi includendoli nel grafo con probabilità p. Più esplicitamente, per ogni possibile coppia di
+vertici, si genera un numero reale compreso tra 0 e 1; se questo è minore di p si inserisce l’arco, altrimenti non lo si inserisce. */
+
 func gen(p float64) *grafo {
 	rand.Seed(time.Now().UnixNano())
 	g := new(grafo)
@@ -62,8 +66,56 @@ func gen(p float64) *grafo {
 	return g
 }
 
+/*
+degree (v) calcola il grado del vertice v.
+Si ricorda che il grado di un vertice è definito come il numero di vertici ad esso adiacenti.
+*/
+func degree(g *grafo, v int) {
+	fmt.Printf("Grado del vertice %d: %d\n", v, len(g.adiacenze[v]))
+}
+
+func bfs(g *grafo, v int, w int) bool {
+	trovato := false
+	coda := []int{v}
+	aux := make(map[int]bool)
+	aux[v] = true
+	for len(coda) > 0 && trovato == false {
+		app := coda[0]
+		coda = coda[1:]
+		if app == w {
+			trovato = true
+			break
+		}
+
+		for _, v2 := range g.adiacenze[app] {
+			if !aux[v2] {
+				coda = append(coda, v2)
+				aux[v2] = true
+			}
+		}
+	}
+	return trovato
+
+}
+
+/*
+path (v, w) testa l’esistenza di un cammino semplice che collega i vertici v e w. Si ricorda che un cammino si dice semplice quando attraversa ogni vertice al più una volta.
+*/
+func path(g *grafo, v int, w int) bool {
+	return bfs(g, v, w)
+}
+
+func ccc(g *grafo) {
+	cont := 0
+
+}
+
 func main() {
 	g := gen(0.6)
 	stampaGrafo(g)
-
+	if path(g, 0, 4) {
+		fmt.Println("Cammino esistente")
+	} else {
+		fmt.Println("Cammino NON esistente")
+	}
 }
