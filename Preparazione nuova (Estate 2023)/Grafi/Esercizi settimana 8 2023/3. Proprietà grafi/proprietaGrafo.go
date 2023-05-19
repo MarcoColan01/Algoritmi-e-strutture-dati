@@ -105,8 +105,19 @@ func path(g *grafo, v int, w int) bool {
 	return bfs(g, v, w)
 }
 
+/*
+ccc conta il numero di componenti connesse di un grafo (non orientato). Si ricorda che si chiama componente connessa di un grafo ogni insieme massimale di vertici connessi tra loro da un cammino
+*/
 func ccc(g *grafo) {
 	cont := 0
+	aux := make(map[int]bool)
+	for i, _ := range g.adiacenze {
+		if !aux[i] {
+			bfs(g, i, 90)
+			cont++
+		}
+	}
+	fmt.Printf("Numero componenti connesse nel grafo: %d\n", cont)
 
 }
 
@@ -118,4 +129,5 @@ func main() {
 	} else {
 		fmt.Println("Cammino NON esistente")
 	}
+	ccc(g)
 }
