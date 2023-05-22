@@ -74,7 +74,7 @@ func degree(g *grafo, v int) {
 	fmt.Printf("Grado del vertice %d: %d\n", v, len(g.adiacenze[v]))
 }
 
-func bfs(g *grafo, v int, w int) bool {
+func bfs1(g *grafo, v int, w int) bool {
 	trovato := false
 	coda := []int{v}
 	aux := make(map[int]bool)
@@ -98,11 +98,29 @@ func bfs(g *grafo, v int, w int) bool {
 
 }
 
+func bfs2(g *grafo, v int, aux map[int]bool) {
+	coda := []int{v}
+	//aux := make(map[int]bool)
+	aux[v] = true
+	for len(coda) > 0 {
+		app := coda[0]
+		coda = coda[1:]
+
+		for _, v2 := range g.adiacenze[app] {
+			if !aux[v2] {
+				coda = append(coda, v2)
+				aux[v2] = true
+			}
+		}
+	}
+
+}
+
 /*
 path (v, w) testa l’esistenza di un cammino semplice che collega i vertici v e w. Si ricorda che un cammino si dice semplice quando attraversa ogni vertice al più una volta.
 */
 func path(g *grafo, v int, w int) bool {
-	return bfs(g, v, w)
+	return bfs1(g, v, w)
 }
 
 /*
@@ -113,7 +131,8 @@ func ccc(g *grafo) {
 	aux := make(map[int]bool)
 	for i, _ := range g.adiacenze {
 		if !aux[i] {
-			bfs(g, i, 90)
+			bfs2(g, i, aux)
+			fmt.Println(aux)
 			cont++
 		}
 	}
@@ -121,13 +140,89 @@ func ccc(g *grafo) {
 
 }
 
+/*
+5. cc (v) stampa l’elenco dei vertici della componente connessa contenente v;
+*/
+
+func cc(g *grafo, v int) {
+	aux := make(map[int]bool)
+	coda := []int{v}
+	aux[v] = true
+
+	for len(coda) > 0 {
+		k := coda[0]
+		coda = coda[1:]
+		for _, y := range g.adiacenze[k] {
+			if !aux[y] {
+				aux[y] = true
+				coda = append(coda, y)
+				fmt.Printf("%d ", v)
+			}
+		}
+	}
+
+}
+
+/*
+6. span (v) calcola uno spanning tree con radice v e lo stampa nella rappresentazione "a sommario".
+Per ottenere l'albero di altezza minima, eseguo una visita in ampiezza del grafo.
+*/
+func span(g *grafo, v int) {
+	coda := []int{v}
+	aux := make(map[int]bool)
+	aux[v] = true
+
+	for len(coda) > 0 {
+		k := coda[0]
+		coda = coda[1:]
+		for _, w := range g.adiacenze[k] {
+			if !aux[w] {
+				aux[w] = true
+				coda = append(coda, w)
+				fmt.Printf("Arco %d %d\n", k, w)
+			}
+		}
+	}
+}
+
+func dfs1(g *grafo, node int, color int, colori map[int]int) bool {
+	colori[node] = color
+	for _, w := range g.adiacenze[node] {
+		if colori[w] == color {
+			return false
+		}
+		if colori[w] == 0 && !dfs1(g, w, -color, colori) {
+			return false
+		}
+	}
+	return true
+}
+
+func twocolor(g *grafo) bool {
+	//ok := true
+	colori := make(map[int]int)
+	for node, _ := range g.adiacenze {
+		if colori[node] == 0 && !dfs1(g, node, 1, colori) {
+			return false
+		}
+	}
+	return true
+}
+
 func main() {
-	g := gen(0.6)
+	g := gen(0.8)
 	stampaGrafo(g)
 	if path(g, 0, 4) {
 		fmt.Println("Cammino esistente")
 	} else {
 		fmt.Println("Cammino NON esistente")
 	}
-	ccc(g)
+	//ccc(g)
+	//cc(g, 1)
+	span(g, 1)
+	if twocolor(g) {
+		fmt.Println("Il grafo è bicolorabile")
+	} else {
+		fmt.Println("Il grafo NON è bicolorabile")
+	}
 }
