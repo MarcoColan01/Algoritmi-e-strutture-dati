@@ -1,0 +1,23 @@
+1.1 Descrizione del problema
+Sunnydale è una città che ospita un elevatissimo numero di vampiri. I vampiri non possono sopportare la luce solare; l’attraversamento delle gallerie sotterranee di Sunnydale è sempre stato il mezzo preferito dai vampiri per muoversi nella città. I continui crolli delle gallerie hanno creato dei fori nei soffitti, rendendone alcune troppo luminose per un attraversamento tranquillo e sereno. Harmony, una ragazza-vampiro, si muove per le gallerie sotterranee secondo una regola tanto semplice quanto tassativa: ad ogni svincolo sceglie sempre e comunque la galleria meno luminosa. Harmony vuole andare a trovare la sua amica Sarah.
+Avete a disposizione queste informazioni: 
+    N è il numero degli svincoli (numerati da 1 a N);
+    M è il numero delle gallerie; 
+    H è l’indice dello svincolo dove abita Harmony; 
+    S è l’indice dello svincolo dove abita Sarah. 
+    Inoltre, per ogni galleria, sapete quali svincoli collega e conoscete la sua luminosità, indicata da un numero intero (maggiore è il numero, maggiore è la luminosità).
+Problema: sapendo che non esistono due gallerie egualmente luminose, bisogna determinare se Harmony possa raggiungere la casa sotterranea di Sarah e, in caso affermativo, quante gallerie le sono necessarie per arrivare.
+
+1.2 Modellazione
+Modellate la situazione con un grafo:
+    1. Cosa rappresentano i nodi?
+        I nodi del grafo (insieme N) rappresentano gli svincoli di Sunnydale
+    2. Cosa rappresentano gli archi?
+        Gli archi (insieme M) rappresentano le gallerie di Sunnydale. Siano x,y due gallerie: allora se le due gallerie sono collegate, esisterà l'arco (x, y) nell'insieme M.
+    3. Che caratteristiche ha il grafo (orientato? connesso? pesato?)
+        Il seguente grafo sarà: 
+            orientato (se esiste lo svincolo x,y non è detto che esista quello y,x)
+            non connesso (possono esistere gallerie scollegate dal resto delle altre)
+            pesato sugli archi (siano x,y due gallerie il cui arco (x,y) è presente in M: allora w(x,y) = k sarà il peso di tale arco, ossia la luminosità della galleria)
+    4. Formulate il problema in termini di grafo
+        Inizialmente, il problema potrebbe essere formulabile come ricerca del cammino minimo tra due coppie di vertici in un grafo pesato. Tuttavia, bisogna osservare che non esiste un algoritmo diretto per risolvere tale problema (anche se è possibile adattare uno degli algoritmi noti per il problema del cammino minimo) e che non stiamo cercando direttamente il cammino di costo minimo, ma semplicemente il numero di vertici che dobbiamo attraversare per raggiungere un certo vertice. A questo scopo, quindi, è possibile eseguire una semplice visita in ampiezza sul grafo a partire dal vertice che rappresenta la posizione di Harmony, e ogni volta che dovremo scegliere quale arco aggiungere alla frontiera (tra quelli adiacenti al vertice in cui ci troviamo), sceglieremo quello che ha costo minimo. L'algoritmo termina non appena raggiunge il vertice che rappresenta la posizione di Sarah, restituendo il numero di vertici attraversati, oppure -1 se non esiste un cammino tra il vertice che rappresenta la posizione di Harmony e quello che rappresenta la posizione di Sarah.
