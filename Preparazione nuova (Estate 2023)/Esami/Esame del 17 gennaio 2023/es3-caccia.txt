@@ -1,0 +1,35 @@
+1. Modellate la situazione con una struttura dati opportuna, che consenta di svolgere efficientemente i compiti enunciati sopra:
+    1a. descrivete come si possono rappresentare i foglietti e i loro contenuti.
+    1b. riformulate, nei termini della struttura dati scelta, ciascuno dei compiti enunciati sopra.
+
+La situazione può essere modellata mediante un albero binario, in cui i nodi rappresentano i foglietti relativi a ciascun oggetto ed esiste un arco tra due nodi x,y (con x = padre e y = figlio) se y è necessario ad x per determinarne il valore. Più in particolare:
+    -radice: rappresenta l'oggetto da cui iniziare la caccia al tesoro
+    -nodi interni: rappresentano oggetti il cui valore non è immediatamente noto, ma va calcolato mediante i valori dei figli (i quali, a loro volta, potrebbero non avere un valore immediatamente noto e quindi va calcolato anche il valore di essi).
+    -foglie: rappresentano oggetti il cui valore è immediatamente noto e non va calcolato. 
+
+1a. I foglietti, come detto prima, si possono rappresentare come nodi di un albero binario. Tuttavia non basta memorizzare il solo nome dell'oggetto e i riferimenti ai figli destro e sinistro, ma servono anche altri campi per gli altri contenuti. Avremo quindi che i nodi dell'albero conterranno i seguenti campi:
+    -nome: nome dell'oggetto 
+    -valore: il valore dell'oggetto. Questo può essere un valore intero noto oppure un valore non noto che va calcolato (assumiamo che, per queste situazioni, il valore sia 10000). 
+    -op: campo stringa che indica il tipo di operazione che va applicato ai figli sinistro e destro per determinare il valore non immediatamente noto. Se il valore è già noto, allora questo campo sarà null.  
+    -puntatori ai figli destro e sinistro: chiaramente saranno entrambi pari a null per le foglie. 
+    -puntatore al nodo padre: questo puntatore sarà utile per implementare uno dei compiti. 
+
+
+1b. 
+Compito a: dato il nome di un oggetto, calcolare il numero misterioso associato all'oggetto. 
+Per svolgere questo compito, è sufficiente eseguire una visita in post-ordine in cui la radice dell'albero rappresenta l'oggetto da cui si comincia la caccia. Ogni volta che visito un nodo, controllo se il valore è noto oppure no: se è noto non faccio nulla, altrimenti applico l'operazione presente nel campo op ai figli sinistro e destro. Alla fine, essendo una visita in post-ordine, la radice conterrà il valore che fa vincere il gioco. 
+
+Compito b: dato il nome di un oggetto, scrivere l'espressione completamente parantesizzata che riassume le operazioni da fare per calcolare il numero misterioso associato all'oggetto.
+Per svolgere questo compito, è sufficiente eseguire una visita in ordine dell'albero. 
+
+Compito c: stampare, in ordine crescente, tutti i numeri scritti sui foglietti. 
+Per svolgere questo compito, bisogna prima svolgere il compito a per determinare il valore di ogni foglietto. Dopodichè, si può eseguire una visita in profondità dell'albero per riempire un array contenente i valori di tutti i foglietti. Su questo array si può poi applicare un algoritmo di ordinamento per ordinarlo e avere i numeri dei foglietti in ordine
+
+Compito d: dato il nome di un oggetto a, stampare i nomi degli oggetti a cui serve a.
+Si tratta di percorrere un percorso che, dal nodo a, risale verso la radice. Ecco perchè i nodi che rappresentano i foglietti hanno anche un campo padre: in questo modo è immediato risalire verso l'altro, seguendo tali puntatori. 
+
+
+2. Descrivete come è opportuno implementare la struttura dati scelta
+Essendo la struttura dati un albero binario, essa può essere implementata mediante un tipo dato strutturato che presenta tutti i campi descritti sopra e un altro tipo dato strutturato che conterrà solo il puntatore alla radice di tale albero.
+
+3. Per ciascun compito progettate e descrivete un algoritmo che consenta di svolgere il compito. 
