@@ -1,0 +1,71 @@
+1) Modellate la situazione con una struttura dati opportuna, che consenta di svolgere efficientemente le operazioni enunciate sopra:
+    1a. descrivete come si può rappresentare la rete mediante tale struttura dati
+    1b. riformulate, nei termini della struttura dati scelta, ciascuna delle operazioni sopra enunciate
+
+La situazione può essere modellata mediante un grafo, formulato nel seguente modo (supponiamo 2 <= i <= n-1):
+    nodi: sono le luci della rete 
+    archi: per ogni interruttore i, vi saranno:
+        l'arco che collega il nodo i col nodo i-1
+        l'arco che collega il nodo i col nodo i+1
+Inoltre, tale grafo è non orientato, non pesato sugli archi e connesso. 
+I compiti sopra enunciati, in termini di grafo, possono essere implementati nel seguente modo:
+    a. Dato un intero n, premere l'interruttore n-esimo. In termini di grafo, significa cambiare lo stato dell'n-esimo, n-1 esimo e n+1 esimo nodo.
+    b. Data una sequenza di interruttori i1,i2,...,im, premere la sequenza di interruttori nell'ordine dato. In termini di grafo, significa ripetere il compito a premendo ogni volta l'i-esimo interruttore, con i = 1...m. 
+    c. Data una rete di luci in un certo stato di accensione, determinare una sequenza di interruttori che consenta di spegnere tutte le luci. In termini di grafo, questo significa eseguire una visita in ampiezza, in cui ogni volta si preme una diversa sequenza di interruttori.  
+
+2) Descrivete come è opportuno implementare la struttura dati scelta, specificando quali informazioni vanno tenute in memoria e come vanno rappresentate.
+La modellazione mediante grafo ci ha permesso di riformulare i compiti sopra descritti mediante operazioni su grafi. Tuttavia, implementare direttamente il grafo mediante una sua rappresentazione può essere oneroso in termini di spazio, dato che, se n è il numero di interruttori nella rete (e quindi di nodi del grafo), il numero di archi è 3n, perchè per i = 2...n l'i-esimo interruttore è connesso a 3 luci diverse. 
+Per cui, possiamo usare una strategia simile ad heapSort, in cui lo heap non viene rappresentato come un albero vero e proprio ma come un vettore posizionale. In questo caso, il vettore posizionale sarà composto da booleani con indici da 1 a n (con n = numero di nodi del grafo e quindi di luci nella rete), ed è formulato in questo modo. Sia i una posizione del vettore:
+    se i = 1: tale posizione rappresenta la prima luce della rete e quindi il relativo interruttore agisce sulle luci in posizioni i, 2 e n nel vettore.
+    se 1 < i < n: tale posizione rappresenta una luce nella rete che non è la prima o l'ultima. In questo caso, il relativo interruttore agisce sulle luci in posizione i, i+1 e i-1 nel vettore. 
+    se i = n: tale posizione rappresenta l'ultima luce nella rete e quindi il relativo interruttore agisce sulle luci i, 1 e i-1 nel vettore. 
+Tale vettore, quindi, occuperà uno spazio proporzionale al numero di nodi nel grafo (quindi di luci nella rete). 
+
+3) Per ciascun compito, progettate e descrivete un algoritmo che consenta di svolgere il compito, sfruttando le scelte di progettazione e implementazione fatte precedentemente. 
+
+Compito a.
+    algoritmo compitoa(rete bool[1...n], n int){
+        if n == 1 then{
+            rete[2] = !rete[2]
+            rete[n] = !rete[n]
+            rete[i] = !rete[i]
+        }else if n == len(rete) then{
+            rete[i] = !rete[i]
+            rete[1] = !rete[1]
+            rete[i-1] = !rete[i-1]
+        }else{
+            rete[n] = !rete[n]
+            rete[n-1] = !rete[n-1]
+            rete[n+1] = !rete[n+1]
+        }
+    }
+
+Compito b. 
+    algoritmo compitob(rete bool[1...n], sequenza bool[1...m]){
+        for i from 1 to len(sequenza){
+            compitoa(rete, sequenza[i])
+        }
+    }
+
+Compito c. 
+    algoritmo compitoc(rete bool[1...n]) []int{
+        sia sequenza una slice di interi
+        sia c una coda inizialmente vuota 
+        sia visitati un vettore di booleani 
+
+        c.enqueue(rete[1])
+        while !c.isEmpty() do{
+            n = c.dequeue()
+            aggiungi n a sequenza
+            if 
+            aggiungi n a visitati 
+            if n == 1{
+                if rete[]
+            }else if n == len(rete){
+
+            }else{
+
+            }
+        }
+        return sequenza
+    }
