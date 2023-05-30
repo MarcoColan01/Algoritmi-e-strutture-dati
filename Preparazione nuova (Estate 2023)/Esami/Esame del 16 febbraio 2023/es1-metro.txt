@@ -1,0 +1,18 @@
+La rete metropolitana può essere modellata mediante un grafo, formalizzato nel seguente modo: 
+    nodi: sono le stazioni della metropolitana
+    archi: sono i tratti che collegano due stazioni
+    linee della metropolitana: sono dei cammini nel grafo 
+Inoltre, questo grafo sarà:
+    -non orientato: posso andare dalla stazione a verso quella b ma posso anche fare il percorso inverso.
+    -pesato sugli archi: sia (u,v) un arco appartenente all'insieme E degli archi: w(u,v) sarà il peso di tale arco, che indica il tempo necessario a percorrere la tratta dalla stazione u a quella v. Dato che i tempi di percorrimento sono tutti unitari, ogni arco avrà peso 1.
+    -connesso: esiste sempre un cammino tra due nodi del grafo perchè da ogni stazione se ne può raggiungere qualunque altra mediante un cammino nel grafo.
+Rimane da capire come modellare le stazioni di interscambio: in questo caso, si può decidere che una stazione di interscambio sarà rappresentata con un nodo per ogni linea a cui è collegata. Quindi, per esempio, la stazione Loreto avrà un nodo che si chiamerà Loreto1 per indicare che è la stazione Loreto lato linea 1 e uno che si chiamerà Loreto2 per indicare che è la stazione Loreto lato linea 
+
+2. Il problema di calcolare il tempo minimo per raggiungere P partendo da A, in termini di grafo, può essere riformulato come visita in ampiezza del grafo. Ci ricondciamo ad una visita generica del grafo e non al calcolo del cammino minimo perchè in questo caso gli archi hanno tutti lo stesso peso, quindi sarebbe poco conveniente usare un algoritmo come Dijkstra. 
+
+3. 
+
+
+4.
+
+
