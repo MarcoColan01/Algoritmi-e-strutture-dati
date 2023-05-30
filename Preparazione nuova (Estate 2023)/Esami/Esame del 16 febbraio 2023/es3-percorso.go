@@ -77,72 +77,28 @@ func stampaRete(r rete) {
 	}
 }
 
-// Complessità: O(n+l)
-func linea(mm rete, numLinea int) []string {
-	stazioni := make([]string, 0)
-	for i := 0; i < len(mm.stazioni); i++ {
-		if len(mm.stazioni[i].linee) == 1 && mm.stazioni[i].linee[0] == numLinea {
-			stazioni = append(stazioni, mm.stazioni[i].nome)
-		} else {
-			for j := 0; j < len(mm.stazioni[i].linee); j++ {
-				if mm.stazioni[i].linee[j] == numLinea {
-					stazioni = append(stazioni, mm.stazioni[i].nome)
-					break
-				}
-			}
-		}
-	}
-	return stazioni
-}
-
-// Complessità: O(1)
-func stazioniVicine(mm rete, s string) []string {
-	return mm.adiacenti[s]
-}
-
-// Complessità: O(n)
-func interscambio(mm rete) []string {
-	stazioni := make([]string, 0)
-	for i := 0; i < len(mm.stazioni); i++ {
-		if len(mm.stazioni[i].linee) > 1 {
-			stazioni = append(stazioni, mm.stazioni[i].nome)
-		}
-	}
-	return stazioni
-}
-
-// Complessità: O(l)
-func stessaLinea(mm rete, s1 string, s2 string) bool {
-	stessa := false
-	for i := 0; i < len(mm.stazioni[mm.indexes[s1]].linee); i++ {
-		if stessa {
+func tempo(mm rete, partenza, arrivo string) int {
+	n := 0
+	aux := make(map[string]bool)
+	coda := []stazione{mm.stazioni[mm.indexes[partenza]]}
+	aux[coda[0].nome] = true
+	for len(coda) > 0 {
+		k := coda[0]
+		coda = coda[1:]
+		if k.nome == arrivo {
 			break
 		}
-		for j := 0; j < len(mm.stazioni[mm.indexes[s2]].linee); j++ {
-			if mm.stazioni[mm.indexes[s1]].linee[i] == mm.stazioni[mm.indexes[s2]].linee[j] {
-				stessa = true
-				break
-			}
+		if len(k.linee) == 1 && k.linee[0] == mm.stazioni[mm.indexes[arrivo]].linee[0] {
+			coda = coda[0:0]
+			coda = append(coda, mm.adiacenti[k.nome])
 		}
+		n++
 	}
-	return stessa
+	return n
 }
 
 func main() {
 	r := leggiDati("input-metro.txt")
-	s := linea(r, 1)
-	fmt.Println(s)
-
-	s2 := stazioniVicine(r, "Porta Garibaldi")
-	fmt.Println(s2)
-
-	s3 := interscambio(r)
-	fmt.Println(s3)
-
-	if stessaLinea(r, "Cadorna", "Centrale") {
-		fmt.Println("Le due stazioni sono sulla stessa linea")
-	} else {
-		fmt.Println("Le due stazioni NON sono sulla stessa linea")
-	}
+	n := tempo(r, "Cadorna", "Isola")
 	//stampaRete(r)
 }
