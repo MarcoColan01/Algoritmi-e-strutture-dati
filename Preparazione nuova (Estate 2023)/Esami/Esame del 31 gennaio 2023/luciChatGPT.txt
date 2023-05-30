@@ -1,0 +1,75 @@
+abbiamo una rete di luci, in cui ogni interruttore agisce sulle 3 luci che collega; le luci possono essere accese o spente. Generalizziamo la situzione con un numero arbitrario n di interruttori e luci: indichiamo sia le luci che gli interruttori con numeri progressivi da 1 a n. Se i è compreso tra 2 e n-1, allora l'i-esimo interruttore è collegato alle luci i-1 e i+1 (oltre ovviamente alla luce i). Inoltre, l'interruttore 1 è collegato alle luci n, 1 e 2, mentre l'interruttore n è collegato alle luci n-1, n e 1. L'intero n si chiama dimensione della rete. Lo stato di accensione della rete è descritto da una sequenza di bit, dove l'i-esimo bit indica se la luce i è accesa (1) o spenta (0). Vogliamo scrivere un programma che simuli l'uso di interruttori in questo tipo di reti, rappresentando in ogni istante lo stato di accensione della rete tramite slice di booleani. 
+
+Ora che hai queste informazioni, rispondi a queste domande: 
+
+1) Modellate la situazione con una struttura dati opportuna, che consenta di svolgere efficientemente le operazioni enunciate sopra:
+    1a. descrivete come si può rappresentare la rete mediante tale struttura dati
+    1b. riformulate, nei termini della struttura dati scelta, ciascuna delle operazioni sopra enunciate
+
+2) Compito da svolgere: data una rete di luci in un certo stato iniziale, determinare una sequenza di interruttori che consenta di spegnere tutte le luci.
+
+
+1) Per modellare efficacemente la situazione descritta, possiamo utilizzare una lista circolare di booleani per rappresentare lo stato di accensione delle luci nella rete. Ogni elemento della lista corrisponderà a una luce e il valore booleano indicherà se la luce è accesa (True) o spenta (False).
+
+1a. La rete può essere rappresentata mediante una lista circolare di booleani. Ad esempio, se la dimensione della rete è n, la lista avrà n elementi, ognuno rappresentante lo stato di accensione di una luce specifica.
+
+1b. Le operazioni possono essere riformulate come segue:
+- Accendere una luce: Impostare il valore del bit corrispondente all'indice della luce desiderata nella lista a True.
+- Spegnere una luce: Impostare il valore del bit corrispondente all'indice della luce desiderata nella lista a False.
+- Cambiare lo stato di una luce (accendere se è spenta o spegnere se è accesa): Invertire il valore del bit corrispondente all'indice della luce desiderata nella lista.
+- Azionare un interruttore: In base all'indice dell'interruttore, modificare lo stato di accensione delle luci collegate a quell'interruttore (i-1, i e i+1).
+
+2) Per determinare una sequenza di interruttori che consenta di spegnere tutte le luci inizialmente accese, possiamo seguire il seguente algoritmo:
+
+- Inizializzare una lista vuota chiamata "sequenza_interruttori" per memorizzare la sequenza di interruttori da azionare.
+- Scorrere la lista di luci e, per ogni luce accesa, trovare l'interruttore collegato che può spegnerla.
+- Aggiungere l'interruttore alla lista "sequenza_interruttori".
+- Azionare l'interruttore trovato per spegnere la luce.
+- Ripetere i passaggi precedenti finché ci sono luci accese nella rete.
+
+Alla fine dell'algoritmo, la lista "sequenza_interruttori" conterrà la sequenza di interruttori da azionare per spegnere tutte le luci nella rete.
+
+
+
+Se desideri modellare la situazione come un grafo e utilizzare un algoritmo noto come la visita in ampiezza (BFS), puoi fare quanto segue:
+
+1) Creazione del grafo:
+- Ogni luce nella rete sarà un nodo nel grafo.
+- Per ogni interruttore i-esimo, crea un arco diretto dal nodo corrispondente alla luce i a quelli delle luci i-1, i+1 (con le opportune considerazioni per i nodi che rappresentano le luci 1 e n).
+
+2) Implementazione del vettore posizionale:
+- Utilizza un vettore posizionale (un array o una lista) per rappresentare lo stato di accensione delle luci nella rete. Ogni elemento del vettore sarà un booleano che indica se la luce corrispondente è accesa o spenta.
+
+3) Algoritmo BFS per spegnere tutte le luci:
+- Inizializza una coda vuota per la visita in ampiezza e un vettore booleano per tenere traccia dei nodi visitati.
+- Aggiungi il nodo corrispondente alla luce iniziale alla coda.
+- Finché la coda non è vuota, esegui i seguenti passaggi:
+  - Estrai un nodo dalla coda.
+  - Spegni la luce corrispondente al nodo (impostando l'elemento corrispondente del vettore posizionale a False).
+  - Segna il nodo come visitato.
+  - Per ogni nodo adiacente non visitato, controlla se è acceso (il corrispondente elemento del vettore posizionale è True). In tal caso, aggiungi il nodo alla coda.
+- Alla fine dell'algoritmo, tutte le luci dovrebbero essere spente (tutti gli elementi del vettore posizionale sono False).
+
+Ricorda che questa implementazione basata su grafi e visita in ampiezza è solo un'altra opzione per modellare e risolvere il problema. La prima soluzione proposta utilizzando una lista circolare di booleani può essere più semplice da implementare ed efficiente in termini di complessità computazionale.
+
+
+
+
+
+Mi scuso per la confusione precedente. Se desideri utilizzare un approccio basato sulla visita in ampiezza direttamente sul vettore posizionale, puoi farlo come segue:
+
+1) Creazione del vettore posizionale:
+- Utilizza un vettore posizionale (un array o una lista) per rappresentare lo stato di accensione delle luci nella rete. Ogni elemento del vettore sarà un booleano che indica se la luce corrispondente è accesa o spenta.
+
+2) Algoritmo BFS per spegnere tutte le luci:
+- Inizializza una coda vuota per la visita in ampiezza e un vettore booleano per tenere traccia dei nodi visitati (indicando se la luce è stata già processata o meno).
+- Aggiungi l'indice della luce iniziale alla coda.
+- Finché la coda non è vuota, esegui i seguenti passaggi:
+  - Estrai un indice dalla coda.
+  - Spegni la luce corrispondente all'indice (impostando l'elemento corrispondente del vettore posizionale a False).
+  - Segna l'indice come visitato.
+  - Trova gli indici delle luci adiacenti all'indice corrente (considerando gli indici precedenti e successivi, con le opportune considerazioni per gli estremi della rete).
+  - Per ogni indice di luce adiacente non visitato, controlla se la luce è accesa (l'elemento corrispondente del vettore posizionale è True). In tal caso, aggiungi l'indice alla coda.
+- Alla fine dell'algoritmo, tutte le luci dovrebbero essere spente (tutti gli elementi del vettore posizionale sono False).
+
+Questo approccio permette di utilizzare la struttura dati del vettore posizionale e di sfruttare l'algoritmo di visita in ampiezza per spegnere tutte le luci nella rete.
