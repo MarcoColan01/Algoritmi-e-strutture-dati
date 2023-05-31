@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -22,6 +23,7 @@ type rete struct {
 func leggiDati(nomeFile string) rete {
 	aux := make(map[string]bool)
 	var r rete
+	r.n = 0
 	r.stazioni = make([]stazione, 0)
 	r.adiacenti = make(map[string][]string)
 	r.indexes = make(map[string]int)
@@ -34,7 +36,7 @@ func leggiDati(nomeFile string) rete {
 	scanner.Split(bufio.ScanLines)
 	defer file.Close()
 
-	cont := 0
+	//cont := 0
 	for scanner.Scan() {
 		k := strings.Split(scanner.Text(), ":")
 		linea, _ := strconv.Atoi(strings.Split(k[0], " ")[1])
@@ -55,6 +57,8 @@ func leggiDati(nomeFile string) rete {
 				app.linee = append(app.linee, linea)
 				r.stazioni = append(r.stazioni, app)
 				aux[st[i]] = true
+				r.indexes[st[i]] = r.n
+				r.n++
 			}
 			if i == 0 {
 				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i+1])
@@ -64,10 +68,9 @@ func leggiDati(nomeFile string) rete {
 				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i-1])
 				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i+1])
 			}
-			r.indexes[st[i]] = cont
-			cont++
 		}
 	}
+	//fmt.Println(r.indexes)
 	return r
 }
 
@@ -78,27 +81,39 @@ func stampaRete(r rete) {
 }
 
 func tempo(mm rete, partenza, arrivo string) int {
-	n := 0
-	aux := make(map[string]bool)
-	coda := []stazione{mm.stazioni[mm.indexes[partenza]]}
-	aux[coda[0].nome] = true
-	for len(coda) > 0 {
-		k := coda[0]
-		coda = coda[1:]
-		if k.nome == arrivo {
-			break
-		}
-		if len(k.linee) == 1 && k.linee[0] == mm.stazioni[mm.indexes[arrivo]].linee[0] {
-			coda = coda[0:0]
-			coda = append(coda, mm.adiacenti[k.nome])
-		}
-		n++
+	distanze := make(map[string]int)
+	for _, stazione := range mm.stazioni {
+		distanze[stazione.nome] = math.MaxInt32
 	}
-	return n
+
+	distanze[partenza] = 0
+	coda := []string{partenza}
+
+	for len(coda) > 0 {
+		curr := coda[0]
+		coda = coda[1:]
+		if curr == arrivo {
+			return distanze[curr]
+		}
+		for _, adiacente := range mm.adiacenti[curr] {
+			fmt.Println(len(mm.stazioni[mm.indexes[curr]].linee), len(mm.stazioni[mm.indexes[adiacente]].linee))
+			if distanze[adiacente] == math.MaxInt32 {
+				if len(mm.stazioni[mm.indexes[curr]].linee) > 1 && len(mm.stazioni[mm.indexes[adiacente]].linee) > 1 {
+					distanze[adiacente] = distanze[curr] + 2
+				} else {
+					distanze[adiacente] = distanze[curr] + 1
+				}
+				coda = append(coda, adiacente)
+			}
+		}
+	}
+	return -1
 }
 
 func main() {
 	r := leggiDati("input-metro.txt")
-	n := tempo(r, "Cadorna", "Isola")
+
+	n := tempo(r, "Istria", "Piola")
+	fmt.Println(n)
 	//stampaRete(r)
 }
