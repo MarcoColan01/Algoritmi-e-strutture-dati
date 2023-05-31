@@ -1,0 +1,48 @@
+3.1 Modellazione e progettazione
+Considerate i seguenti cinque approcci:
+    1. Modellare la situazione con grafi
+    2. Modellare la situazione con alberi
+    3. Usare un approccio ricorsivo
+    4. Usare la tecnica della programmazione dinamica
+    5. Usare una tecnica greedy.
+
+Per ciascuno dei due problemi P1 e P2, valutate quali degli approcci suggeriti possono essere utili a risolvere
+il problema, giustificando la risposta. In particolare seguite i seguenti schemi.
+
+• Se scegliete gli approcci 1 o 2:
+    a) descrivete come si può rappresentare la situazione usando grafi/alberi;
+    b) riformulate il problema usando la terminologia relativa a grafi/alberi;
+    c) indicate eventuali proprietà notevoli di questi grafi/alberi;
+    d) descrivete come è opportuno implementare la struttura dati scelta;
+    e) progettate un algoritmo per risolvere il problema, che faccia uso di grafi/alberi.
+• Se scegliete l’approccio 3:
+    a) descrivete la relazione di ricorrenza individuata;
+    b) progettate un algoritmo ricorsivo che risolve il problema.
+• Se scegliete l’approccio 4 o 5: 
+    a)progettare e descrivere un algoritmo che risolve il problema usando la programmazione dinamica / una tecnica greedy, discutendone la correttezza.
+
+Se avete trovato soluzioni diverse per uno stesso problema, confrontate le soluzioni e valutate quale considerate migliore e perché.
+
+La scelta della mia soluzione si baserà sull'approccio 4, ossia con una tecnica di programmazione dinamica. Ho deciso in questo modo perchè la forma con cui si presenta il problema permette in modo relativamente semplice di ricondurlo ad un problema di programmazione dinamica (cammino minimo in una matrice).
+Usiamo quindi la tecnica di programmazione dinamica per progettare un algoritmo che risolva tale problema:
+
+Algoritmo M1(Matrice M [1...n, 1...n]) -> int{
+    Sia C una matrice[1...n, 1...n]
+    C[1,1] <- 0
+    for j <- 2 to n do{
+        C[1,j] <- M[1,j]
+    }
+
+    for i <-2 to n do{
+        for j <- 1 to n do{
+            if j == 1 then{
+                C[i,j] <- M[i,j] + C[i-1, j]
+            }else if j == n || i == n then{
+                C[i,j] <- M[i,j] + min{C[i-1, j], C[i, j-1]}
+            }else{
+                C[i,j] <- M[i,j] + min{C[i+1, j], C[i-1, j], C[i, j+1], C[i, j-1]}
+            }
+        }
+    }
+    return C[n,n]
+}

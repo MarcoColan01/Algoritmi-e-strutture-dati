@@ -1,0 +1,29 @@
+1) Scrivete una definizione per il tipo Bit_node che sia compatibile con quanto scritto nella funzione.
+
+type Bit_node struct {
+	item, y int
+	dx, sx  *Bit_node
+}
+
+2. Analizzate gli effetti della funzione f se viene invocata con secondo argomento 0, e rispondete alle
+domande seguenti:
+a) Qual è l’effetto della funzione f se viene invocata sulla radice dell’albero disegnato sotto?
+La funzione f, invocata sulla radice dell'albero in figura, esegue una visita in preordine dell'albero(radice-figlio sx-figlio dx), e ogni volta che visita un nodo dell'albero assegna al suo campo y la somma tra il parametro x della funzione f e il valore di item del nodo. Il parametro x può anche essere considerato come la somma tra il parametro x che viene passato ad f la prima volta e i nodi che si incontrano nel cammino che, da un generico nodo dell'albero, risale verso la radice. Per cui, per la radice il suo valore sarà semplicemente item + x. 
+
+b) Di quanto si alza al massimo lo stack per effetto questa chiamata?
+Lo stack ha altezza proporzionale all'albero: sia questa h, l'altezza dell'albero è O(h). Se l'albero è molto sbilanciato, l'altezza sarà proporzionale alla lunghezza di una lista concatenata di n elementi (con n = numero nodi nell'albero)
+
+c) Quante altre chiamate della funzione f vengono effettuate per effetto di questa chiamata?
+Per ogni nodo vengono effettuate due chiamate ricorsive: una sul figlio sinistro e una sul figlio destro. 
+
+d) Descrivete a parole cosa fa la funzione f se viene invocata sulla radice di un albero binario qualunque.
+La funzione f, invocata sulla radice di un albero binario qualunque, ha l'effetto di assegnare al campo y di ogni nodo dell'albero la somma tra il parametro x passato alla prima chiamata della funzione e i campi item dei nodi incontrati nel percorso che, da quel nodo, risale verso la radice. 
+
+e) Date un nome più significativo a y.
+y = somma nodi del percorso nodo corrente-radice + una costante.
+
+f) In generale, di quanto si alza al massimo lo stack se la funzione viene invocata sulla radice di un albero binario qualunque?
+In generale, se la funzione viene chiamata su un albero binario qualunque, l'altezza dello stack è proporzionale all'altezza dell'albero. Sia h l'altezza, l'altezza dello stack sarà O(h).
+
+g) In generale, quante chiamate della funzione f vengono effettuate quando f viene invocata sulla radice di un albero binario qualunque?
+Vengono effettuate una prima chiamata sulla radice + 2 chiamate per ogni nodo dell'albero, quindi in totale avremo: 1 + 2n chiamate ricorsive, con n = numero nodi dell'albero. 
