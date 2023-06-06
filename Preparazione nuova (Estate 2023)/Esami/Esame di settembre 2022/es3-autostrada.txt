@@ -1,0 +1,18 @@
+Le uscite di AlgoSole sono indicate ciascuna da una coppia formata da una stringa e un numero. La stringa indica il nome della località che si trova in tale uscita mentre il numero indica la distanza dell'uscita dall'inizio dell'autostrada. 
+Considerate le seguenti operazioni:
+    O1: data una stringa s, individuare la distanza dell'uscita che ha per nome s
+    O2: dato un numero d, individuare il nome dell'uscita che si trova a distanza d dall'inizio dell'autostrada 
+    O3: dato un numero n, individuare il nome dell'uscita più vicina alla posizione geografica che si trova a distanza n dall'inizio dell'autostrada.
+
+1) Progettare una struttura dati adatta all'insieme delle uscite autostradali. Non serve che la creazione della struttura dati sia efficiente, ma la soluzione deve essere tale da consentire di svolgere l'operazione O1 il più velocemente possibile. Descrivere tale struttura dati e il modo in cui può essere usata per svolgere efficientemente O1.
+
+L'insieme delle uscite autostradali può essere realizzato mediante un dizionario, composto da elementi del tipo {chiave:valore} dove la chiave indica il nome di città di un'uscita autostradale ed è ciò che identifica l'elementi nel dizionario, mentre il valore indica la distanza di tale uscita dall'inizio dell'autostrada.
+Per implementare O1, è sufficiente accedere all'elemento del dizionario con chiave s: essendo l'accesso diretto il tempo è O(1). 
+
+2) La struttura dati descritta prima è utile anche per eseguire velocemente O2 ? Se sì spiegare come, altrimenti progettare una struttura dati adatta a svolgere efficientemente O2 e come usarla per tale scopo. 
+
+La struttura dati usata al punto 1 non andrebbe bene per svolgere velocemente O1, perchè andrebbe fatta una scansione di tutto il dizionario alla ricerca dell'elemento con valore d, che richiederebbe tempo O(n) con n = numero elementi nel dizionario.
+Per eseguire velocemente O2, potremmo usare sempre un dizionario, ma in questo caso la chiave che identifica gli elementi sarà la distanza dell'uscita dall'inizio dell'autostrada, mentre il valore diventa il nome dlel'uscita autostradale. In questo modo, possiamo usare un accesso diretto agli elementi in base alla chiave e il tempo diventa O(1). Bisogna però considerare che potrebbero esserci città con la stessa distanza dall'inizio dell'autostrada, ossia elementi con la stessa chiave nel dizionario, per cui scartiamo l'idea del dizionario. 
+Usiamo quindi una lista ordinata di strutture del tipo {chiave:valore}, dove la chiave è la distanza della città con valore associato a tale chiave dall'inizio dell'autostrada, mentre il valore è il nome della città con tale distanza dall'inizio dell'autostrada. Il criterio di ordinamento della lista è in base alle chiavi ed essendo una lista possiamo avere anche strutture con la stessa chiave. Per implementare O2, possiamo usare la ricerca dicotomica sulle chiavi sfruttando il fatto che la lista è ordinata in base alle chiavi: in tal modo, possiamo implementare O2 in tempo O(log n) con n = numero elementi nella lista. 
+
+3) Una delle due strutture dati descritte prima sono utili anche per eseguire velocemente O3 ? Se sì spiegare come, altrimenti progettare una struttura dati adatta a svolgere efficientemente O2 e come usarla per tale scopo. 

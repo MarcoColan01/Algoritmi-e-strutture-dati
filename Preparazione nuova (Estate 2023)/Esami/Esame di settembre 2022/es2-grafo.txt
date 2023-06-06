@@ -1,0 +1,20 @@
+A) Riassumete a parole cosa fa la funzione algo
+La funzione algo, nel ciclo while principale, per prima cosa controlla che il nodo corrente non sia già stato visitato (ciclo nel grafo): in tal caso termina restituendo 0 e stampando -1. Altrimenti, imposta v[curr] = 1 per marcare tale nodo come visitato e, tramite il ciclo for, imposta m = peso minimo trovato negli archi uscenti dal vertice curr e mi = l'indice del nodo il cui arco entrante da curr ha tale peso. Se non ci sono archi uscenti dal nodo corrente, l'esecuzione termina restituendo 0 e stampando -1. Se l'esecuzione non è terminata, curr viene impostato come m_i e c viene incrementato.
+
+B) Date dei nomi più significativi alle variabili c, m, m_i, v
+c = archi attraversati per andare da h ad s 
+m = peso minimo archi uscenti da curr
+m_i = indice vertice il cui arco entrante da curr ha peso minimo 
+v = elenco vertici visitati
+
+C) Spiegate in quali situazioni la funzione termina con l'esecuzione della riga 11 e mostratene un esempio 
+
+D) Spiegate in quali situazioni la funzione termina con l'esecuzione di riga 27 e mostratene almeno un esempio 
+Nel caso in cui un vertice non abbia archi uscenti, ad esempio se il nodo corrente è pari al vertice 0 
+
+E) Cosa restituisce la funzione se riceve la matrice d'adiacenza del grafo in figura ? Qual'è l'ultima riga eseguita ?
+
+La funzione restituisce 0 e stampa 1. L'ultima riga eseguita è la 7
+
+F) Stimate la complessità nel caso peggiore
+Nel caso peggiore, l'algoritmo esamina tutti i vertici del grafo. Per cui nel caso peggiore è O(n).
