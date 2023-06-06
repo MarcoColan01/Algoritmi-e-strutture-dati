@@ -1,0 +1,50 @@
+Un impianto di produzione produce diverse tipologie di prodotti. Il processo di produzione prevede la trasformazione dei prodotti in fasi successive, all’interno di reparti specializzati. I reparti sono individuati da un numero intero progressivo. Ogni reparto impiega un certo numero di lavoratori. Ci sono due tipi di reparto:
+    • Reparti di collaudo: sono dedicati al collaudo dei prodotti; conclusa la fase di collaudo, i prodotti escono dall’impianto perché il ciclo di produzione è concluso.
+    • Reparti di produzione: conclusa la fase di produzione in uno di questi reparti, il prodotto viene inviato ad un altro reparto (di produzione o collaudo). 
+Da ogni reparto ci sono un massimo di 2 reparti possibili cui mandare il prodotto. Ogni reparto riceve i prodotti da un solo altro reparto. La prima fase di produzione avviene sempre nello stesso reparto di produzione, chiamato Primo Reparto. I processi produttivi dell’impianto sono descritti da uno schema che riporta, per ogni numero di reparto (di produzione o collaudo): il numero di lavoratori impiegati e il numero di reparto (di produzione) da cui provengono i prodotti.
+
+1. Si considerino i diagrammi in figura. Se ogni quadratino corrisponde a un reparto, quale dei diagrammi è adatto a descrivere lo schema produttivo? Si giustifichi la risposta e si spieghi perché tutti gli altri diagrammi sono da escludere.
+
+Figura a) Non va bene perchè gli archi che collegano i quadratini non sono orientati e ciò viola il vincolo di fasi successive, dato che da un quadratino posso andare in quello successivo ma anche in uno precedente. 
+
+Figura b) Non va bene perchè vi è un reparto che riceve i prodotti da due reparti diversi (viola il vincolo di reparto di ricezione unico). 
+
+Figura c) Questo schema è adatto a descrivere lo schema produttivo, perchè rispetta tutti i vincoli imposti dal problema. 
+
+Figura d) Non va bene perchè:
+            -gli archi non sono orientati (stesso problema dello schema a)
+            -vi è un quadratino che è collegato ad altri 3 reparti, e ciò viola il vincolo di max due reparti verso cui mandare il prodotto.
+
+Per i motivi descritti, lo schema più adatto è il c. 
+
+2. Si modelli lo schema dei processi produttivi usando una struttura dati opportuna, chiarendo come sia collegata alla situazione descritta; in particolare
+    • si descriva, utilizzando una terminologia appropriata, come sono rappresentati i reparti, i passaggi da un reparto all’altro, il numero di lavoratori operativi nei vari reparti;
+    • si definisca, con la terminologia appropriata, che cosa sono i reparti di collaudo e il Primo Reparto.
+
+Lo schema dei processi produttivi può essere modellato mediante un albero binario, perchè la produzione inizia sempre nello stesso reparto e procede per fasi successive e da un reparto si può andare solo in altri due reparti successivi (scende in profondità nell'albero). 
+In particolare, tale albero è definito nel seguente modo:
+    -nodi: sono i reparti (primo, produzione, collaudo)
+    -archi: sono orientati dal padre verso il figlio perchè la produzione non può tornare indietro ma può solo proseguire in un reparto successivo o terminare. Siano x,y due nodi dell'albero: allora (x,y) appartiene ad E sse dal reparto rappresentato dal nodo x si può proseguire col processo produttivo andando nel reparto rappresentato dal nodo y. 
+Inoltre, sempre con la terminologia degli alberi, definiamo:
+    -Primo reparto: radice dell'albero 
+    -Reparti di collaudo: foglie dell'albero
+
+3. Utilizzando opportunamente la struttura dati definita al punto precedente, si progetti un algoritmo che,
+avendo in input lo schema dei processi produttivi e il numero di lavoratori operativi in ciascun reparto,
+calcoli quanti sono i lavoratori operativi nei reparti di collaudo. 
+
+Per risolvere tale problema, si può eseguire una visita in profondità dell'albero e, ogni volta che si incontra una foglia, si aggiorna una somma progressiva dei lavoratori presenti nei reparti di collaudo. 
+
+struct node{
+    index, nLavoratori int 
+    dx, sx *node
+}
+algoritmo lavoratoriCollaudo(t nodo albero, somma int) int{
+    if t == null{
+        return 0
+    }
+    if t è una foglia{
+        somma = somma + t.nLavoratori
+    }
+    return lavoratoriCollaudo(t.sx, somma) + lavoratoriCollaudo(t.dx, somma)
+}
