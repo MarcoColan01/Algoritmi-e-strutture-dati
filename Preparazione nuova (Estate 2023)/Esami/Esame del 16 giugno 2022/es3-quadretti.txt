@@ -1,0 +1,10 @@
+1. Se c è una casella nera, allora f(c) = 0
+2. Se c è la casella in basso a destra ed è bianca, allora f(c) = 1
+3. Se c è una casella qualsiasi dell'ultima riga, si può scrivere una relazione di ricorrenza che fa riferimento alla casella a destra di c: f(c) = 1
+4. Se invece c è una casella qualsiasi dell'ultima colonna, f(c) = 1
+5. Se c è una casella bianca non di bordo, si può scrivere una relazione di ricorrenza che fa riferimento alla casella sotto e alla casella a destra di c: f(c) = c[i+1,j] + c[i,j+1]
+6. Per quale casella c si ha che f(c) coincide col numero di cammini completi ? La casella [1,1]
+
+Progettazione
+Sfruttando le proprietà di f descritte sopra, è possibile progettare un algoritmo basato su tecnica di programmazione dinamica che calcola i percorsi totali che partono dalla casella in alto a sx e terminano nella casella in basso a dx. Tale algoritmo fa uso di una matrice di programmazione dinamica [1..n, 1...m], le cui ultime righe e colonne vengono inizializzate ad 1. Successivamente, l'algoritmo esegue una scansione righe per colonne della matrice che rappresenta la griglia, partendo dalla penultima riga e scansionando ogni colonna dalla penultima alla prima: durante la scansione, la matrice di programmazione dinamica viene riempita facendo riferimento alla funzione f. Alla fine, la cella [1,1] della matrice di programmazione dinamica conterrà il numero di percorsi totali.
+
