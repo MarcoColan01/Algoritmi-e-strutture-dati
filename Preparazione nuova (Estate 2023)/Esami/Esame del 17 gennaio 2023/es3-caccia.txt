@@ -1,5 +1,5 @@
 1. Modellate la situazione con una struttura dati opportuna, che consenta di svolgere efficientemente i compiti enunciati sopra:
-    1a. descrivete come si possono rappresentare i foglietti e i loro contenuti.
+    1a. descrivete come si possono rappresentare i foglietti e i loro contenuti. 
     1b. riformulate, nei termini della struttura dati scelta, ciascuno dei compiti enunciati sopra.
 
 La situazione può essere modellata mediante un albero binario, in cui i nodi rappresentano i foglietti relativi a ciascun oggetto ed esiste un arco tra due nodi x,y (con x = padre e y = figlio) se y è necessario ad x per determinarne il valore. Più in particolare:

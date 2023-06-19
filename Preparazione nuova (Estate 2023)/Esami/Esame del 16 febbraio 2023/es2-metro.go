@@ -8,23 +8,23 @@ import (
 	"strings"
 )
 
-type stazione struct {
-	nome  string
-	linee []int
+type lines struct {
+	nLinea   int
+	stazioni []string
 }
+
 type rete struct {
-	n         int
-	stazioni  []stazione
-	indexes   map[string]int
-	adiacenti map[string][]string
+	corrispondenze map[string][]int
+	linee          []lines
+	adiacenti      map[string][]string
 }
 
 func leggiDati(nomeFile string) rete {
-	aux := make(map[string]bool)
+
 	var r rete
-	r.stazioni = make([]stazione, 0)
+	r.linee = make([]lines, 0)
 	r.adiacenti = make(map[string][]string)
-	r.indexes = make(map[string]int)
+	r.corrispondenze = make(map[string][]int)
 	file, err := os.Open(nomeFile)
 	if err != nil {
 		os.Exit(-4)
@@ -34,65 +34,57 @@ func leggiDati(nomeFile string) rete {
 	scanner.Split(bufio.ScanLines)
 	defer file.Close()
 
-	cont := 0
 	for scanner.Scan() {
-		k := strings.Split(scanner.Text(), ":")
-		linea, _ := strconv.Atoi(strings.Split(k[0], " ")[1])
-		st := strings.Split(k[1], ", ")
-		st[0] = st[0][1:]
-		st[len(st)-1] = strings.TrimSuffix(st[len(st)-1], ".")
+		k := scanner.Text()
+		n, _ := strconv.Atoi(strings.Split(k, " ")[1][0:1])
+		var l lines
+		l.nLinea = n
+		l.stazioni = make([]string, 0)
+		app := strings.Split(k, ":")
+		st := strings.Split(app[1], ",")
+		st[len(st)-1] = strings.Trim(st[len(st)-1], ".")
 		for i := 0; i < len(st); i++ {
-			if aux[st[i]] {
-				for k := 0; k < len(r.stazioni); k++ {
-					if r.stazioni[k].nome == st[i] {
-						r.stazioni[k].linee = append(r.stazioni[k].linee, linea)
-						break
-					}
-				}
-			} else {
-				var app stazione
-				app.nome = st[i]
-				app.linee = append(app.linee, linea)
-				r.stazioni = append(r.stazioni, app)
-				aux[st[i]] = true
-			}
+			st[i] = strings.TrimSpace(st[i])
+			l.stazioni = append(l.stazioni, st[i])
+			r.corrispondenze[st[i]] = append(r.corrispondenze[st[i]], l.nLinea)
 			if i == 0 {
+				st[i+1] = strings.TrimSpace(st[i+1])
 				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i+1])
 			} else if i == len(st)-1 {
+				st[i-1] = strings.TrimSpace(st[i-1])
 				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i-1])
 			} else {
-				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i-1])
+				st[i+1] = strings.TrimSpace(st[i+1])
+				st[i-1] = strings.TrimSpace(st[i-1])
 				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i+1])
+				r.adiacenti[st[i]] = append(r.adiacenti[st[i]], st[i-1])
 			}
-			r.indexes[st[i]] = cont
-			cont++
 		}
+		r.linee = append(r.linee, l)
 	}
 	return r
 }
 
 func stampaRete(r rete) {
-	for i := 0; i < len(r.stazioni); i++ {
-		fmt.Printf("Stazione %s  Linee: %d   Adiacenti: %s\n", r.stazioni[i].nome, r.stazioni[i].linee, r.adiacenti[r.stazioni[i].nome])
+	for i := 0; i < len(r.linee); i++ {
+		fmt.Printf("Linea %d: %s\n", r.linee[i].nLinea, r.linee[i].stazioni)
+	}
+
+	for i, k := range r.adiacenti {
+		fmt.Printf("Stazione %s adiacenze: %s\n", i, k)
 	}
 }
 
-// Complessità: O(n+l)
+// Complessità: O(l)
 func linea(mm rete, numLinea int) []string {
-	stazioni := make([]string, 0)
-	for i := 0; i < len(mm.stazioni); i++ {
-		if len(mm.stazioni[i].linee) == 1 && mm.stazioni[i].linee[0] == numLinea {
-			stazioni = append(stazioni, mm.stazioni[i].nome)
-		} else {
-			for j := 0; j < len(mm.stazioni[i].linee); j++ {
-				if mm.stazioni[i].linee[j] == numLinea {
-					stazioni = append(stazioni, mm.stazioni[i].nome)
-					break
-				}
-			}
+	var s []string
+	for i := 0; i < len(mm.linee); i++ {
+		if mm.linee[i].nLinea == numLinea {
+			s = mm.linee[i].stazioni
+			break
 		}
 	}
-	return stazioni
+	return s
 }
 
 // Complessità: O(1)
@@ -103,9 +95,9 @@ func stazioniVicine(mm rete, s string) []string {
 // Complessità: O(n)
 func interscambio(mm rete) []string {
 	stazioni := make([]string, 0)
-	for i := 0; i < len(mm.stazioni); i++ {
-		if len(mm.stazioni[i].linee) > 1 {
-			stazioni = append(stazioni, mm.stazioni[i].nome)
+	for i, k := range mm.corrispondenze {
+		if len(k) > 1 {
+			stazioni = append(stazioni, i)
 		}
 	}
 	return stazioni
@@ -114,14 +106,22 @@ func interscambio(mm rete) []string {
 // Complessità: O(l)
 func stessaLinea(mm rete, s1 string, s2 string) bool {
 	stessa := false
-	for i := 0; i < len(mm.stazioni[mm.indexes[s1]].linee); i++ {
-		if stessa {
-			break
+	app1 := mm.corrispondenze[s1]
+	app2 := mm.corrispondenze[s2]
+	if len(app1) == 1 && len(app2) == 1 {
+		if app1[0] == app2[0] {
+			stessa = true
 		}
-		for j := 0; j < len(mm.stazioni[mm.indexes[s2]].linee); j++ {
-			if mm.stazioni[mm.indexes[s1]].linee[i] == mm.stazioni[mm.indexes[s2]].linee[j] {
-				stessa = true
+	} else {
+		for i := 0; i < len(app1); i++ {
+			if stessa {
 				break
+			}
+			for j := 0; j < len(app2); j++ {
+				if app1[i] == app2[j] {
+					stessa = true
+					break
+				}
 			}
 		}
 	}
@@ -130,7 +130,9 @@ func stessaLinea(mm rete, s1 string, s2 string) bool {
 
 func main() {
 	r := leggiDati("input-metro.txt")
-	s := linea(r, 1)
+	stampaRete(r)
+
+	/*s := linea(r, 1)
 	fmt.Println(s)
 
 	s2 := stazioniVicine(r, "Porta Garibaldi")
@@ -139,10 +141,9 @@ func main() {
 	s3 := interscambio(r)
 	fmt.Println(s3)
 
-	if stessaLinea(r, "Cadorna", "Centrale") {
+	if stessaLinea(r, "Istria", "Centrale") {
 		fmt.Println("Le due stazioni sono sulla stessa linea")
 	} else {
 		fmt.Println("Le due stazioni NON sono sulla stessa linea")
-	}
-	//stampaRete(r)
+	}*/
 }

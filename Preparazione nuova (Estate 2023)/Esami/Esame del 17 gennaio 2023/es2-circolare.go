@@ -42,7 +42,47 @@ func f2(p *circNode, k int) int {
 	return cont
 }
 
-//func sposta(p *circNode){}
+func printList(c *circNode) {
+	app := c
+	for {
+		fmt.Printf("%d -> ", app.val)
+		app = app.next
+		if app == c {
+			break
+		}
+	}
+}
+
+func sposta(p *circNode) {
+	if p == nil {
+		return
+	}
+
+	numPosizioni := p.val
+	if numPosizioni > 0 {
+		// Sposta il nodo in avanti
+		for i := 0; i < numPosizioni; i++ {
+			p = p.next
+		}
+	} else if numPosizioni < 0 {
+		// Sposta il nodo all'indietro
+		numPosizioni = -numPosizioni
+		for i := 0; i < numPosizioni; i++ {
+			p = p.next
+		}
+	}
+	prevNode := p
+	for prevNode.next != p {
+		prevNode = prevNode.next
+	}
+
+	prevNode.next = p.next
+	for p.next != nil {
+		p = p.next
+	}
+	p.next = prevNode
+
+}
 
 func main() {
 	c := new(circList)
@@ -53,4 +93,8 @@ func main() {
 	insertCirc(c, 7)
 	k := f2(c.head, 3)
 	fmt.Println(k)
+	printList(c.head)
+	sposta(c.head)
+	fmt.Println()
+	printList(c.head)
 }
